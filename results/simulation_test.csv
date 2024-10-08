@@ -1,0 +1,3 @@
+Log: GPIOA clock is enabled.
+Test: Pin is correctly set to HIGH after enabling clock!
+Test: Pin toggled to LOW successfully!

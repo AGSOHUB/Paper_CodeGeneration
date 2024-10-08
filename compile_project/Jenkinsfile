@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+    environment {
+        TARGET_PATH = "C:/working/jenkin/log" // Change this to your desired path
+        PIPELINENAME = "${env.JOB_NAME}"
+        BUILDNUMBER = "${env.BUILD_NUMBER}"
+        TARGETDIR = "${env.WORKSPACE}"
+    }
+    stages {
+        stage('Clone and Build') {
+            steps {
+                script {
+                    // Combined command to run PowerShell as admin, clone the repo, and run the build script
+                    bat '''
+                        powershell -Command "Start-Process powershell -ArgumentList '-NoExit', '-Command', \\"
+                            git clone https://github.com/PhanCuong91/data.git
+                            cd .\\data\\renode 
+                            .\\build.bat
+                            
+                        \\" -Verb RunAs"
+                    '''
+                    // Create the target directory using PowerShell
+                    // Move the file to the target path
+                    powershell """
+                        if (-Not (Test-Path -Path "${TARGET_PATH}\\${PIPELINENAME}\\${BUILDNUMBER}")) {
+                            New-Item -Path "${TARGET_PATH}\\${PIPELINENAME}\\${BUILDNUMBER}" -ItemType Directory -Force
+                            Copy-Item -Path 'data/renode/build/build_log.txt' -Destination "${TARGET_PATH}\\${PIPELINENAME}\\${BUILDNUMBER}\\build_log.txt" -Force
+                            Copy-Item -Path 'data/renode/build/cmake_log.txt' -Destination "${TARGET_PATH}\\${PIPELINENAME}\\${BUILDNUMBER}\\cmake_log.txt" -Force
+                            Copy-Item -Path 'data/renode/build/src/STM32F4Template.elf' -Destination "${TARGET_PATH}\\${PIPELINENAME}\\${BUILDNUMBER}\\STM32F4Template.elf" -Force
+                        }
+                    """
+                }
+            }
+    
+            post {
+                success {
+                    echo 'Pipeline completed successfully!'
+                    // Actions on success, like notifying users or archiving artifacts
+                    echo 'Archiving build logs...'
+                    echo "${TARGET_PATH}"
+                    script{
+                        def logFilePath = 'data/renode/build/build_log.txt'
+                        if (fileExists(logFilePath)) {
+                            archiveArtifacts artifacts: logFilePath, allowEmptyArchive: false
+                        } else {
+                            error "Log file does not exist: ${logFilePath}"
+                        }
+                        archiveArtifacts artifacts: 'data/renode/build/cmake_log.txt', fingerprint: true
+                        archiveArtifacts artifacts: 'data/renode/build/src/STM32F4Template.elf', fingerprint: true
+                    }
+                }
+                failure {
+
+                    echo 'Pipeline failed!'
+                    // Actions on failure, like sending alerts or cleaning up resources
+                }
+            }
+        }
+        stage('Test'){
+            steps{
+                bat '''
+                    set var=%cd%
+                    echo %var%
+                '''
+                bat '''
+                    renode-test .\\data\\renode\\test\\test_renode.robot -r out
+                '''
+            }
+        }
+        stage('Clean up'){
+            steps{
+                script {
+                    deleteDir()
+                    //sh 'rm -rf data'
+                    echo 'Clean up the folder after run.'
+                    // Cleanup or final steps
+                }
+            }
+        }
+    }
+}

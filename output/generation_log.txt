@@ -1,0 +1,13 @@
+2024-10-08 16:26:25 - Generating function: ENABLE_GPIOA_CLOCK with parameters 
+2024-10-08 16:26:35 - Inserted code into compile_project\src\microcontroller_hal.h
+2024-10-08 16:26:35 - Generating function: set_input_output_mode with parameters GPIOA_BASE, 1 << 5, 1
+2024-10-08 16:26:43 - Inserted code into compile_project\src\microcontroller_hal.h
+2024-10-08 16:26:43 - Generating function: hardware_abstraction_layer_function_gpio_write_pin with parameters GPIOA_BASE, 1 << 5, 1
+2024-10-08 16:26:49 - Inserted code into compile_project\src\microcontroller_hal.h
+2024-10-08 16:26:49 - Generating function: hardware_abstraction_layer_function_gpio_read_pin with parameters GPIOA_BASE, 1 << 5
+2024-10-08 16:26:58 - Inserted code into compile_project\src\microcontroller_hal.h
+2024-10-08 16:26:58 - Generating function: hardware_abstraction_layer_function_gpio_toggle_pin with parameters GPIOA_BASE, 1 << 5
+2024-10-08 16:27:03 - Inserted code into compile_project\src\microcontroller_hal.h
+2024-10-08 16:27:03 - Generating variable: RCC_AHB1ENR_OFFSET
+2024-10-08 16:27:05 - Inserted code into compile_project\src\variables.h
+2024-10-08 16:27:05 - Generating variable: USART_SR_OFFSET
