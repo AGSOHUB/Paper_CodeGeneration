@@ -57,10 +57,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/CMakeFiles C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/lib//CMakeFiles/progress.marks
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/CMakeFiles 0
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/Paper_CodeGeneration/compile_project/build/CMakeFiles C:/msys64/Paper_CodeGeneration/compile_project/build/lib//CMakeFiles/progress.marks
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/Paper_CodeGeneration/compile_project/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/clean
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,17 +103,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/preinstall
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/preinstall
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -135,6 +135,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

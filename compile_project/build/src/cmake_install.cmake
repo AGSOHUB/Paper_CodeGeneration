@@ -1,4 +1,4 @@
-# Install script for directory: C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/src
+# Install script for directory: C:/msys64/Paper_CodeGeneration/compile_project/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,4 +1,4 @@
-# Install script for directory: C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/lib
+# Install script for directory: C:/msys64/Paper_CodeGeneration/compile_project/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/lib/STM32F4xx_StdPeriph_Driver/cmake_install.cmake")
+  include("C:/msys64/Paper_CodeGeneration/compile_project/build/lib/STM32F4xx_StdPeriph_Driver/cmake_install.cmake")
 
 endif()
 

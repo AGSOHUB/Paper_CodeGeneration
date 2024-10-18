@@ -1,0 +1,23 @@
+[ 91%] Built target stm32f4xx
+[ 93%] Building C object src/CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+[ 95%] Linking C executable STM32F4Template.elf
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-closer.o): in function `_close_r':
+c:\m\b\src\newlib-4.4.0.20231231\newlib\libc\reent/closer.c:47:(.text+0xc): warning: _close is not implemented and will always fail
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-closer.o): note: the message above does not take linker garbage collection into account
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-lseekr.o): in function `_lseek_r':
+c:\m\b\src\newlib-4.4.0.20231231\newlib\libc\reent/lseekr.c:49:(.text+0x14): warning: _lseek is not implemented and will always fail
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-lseekr.o): note: the message above does not take linker garbage collection into account
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-readr.o): in function `_read_r':
+c:\m\b\src\newlib-4.4.0.20231231\newlib\libc\reent/readr.c:49:(.text+0x14): warning: _read is not implemented and will always fail
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-readr.o): note: the message above does not take linker garbage collection into account
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-writer.o): in function `_write_r':
+c:\m\b\src\newlib-4.4.0.20231231\newlib\libc\reent/writer.c:49:(.text+0x14): warning: _write is not implemented and will always fail
+C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/bin/ld.exe: C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-writer.o): note: the message above does not take linker garbage collection into account
+[100%] Built target STM32F4Template.elf
+[100%] Built target STM32F4Template.bin
+   text	   data	    bss	    dec	    hex	filename
+   1276	      8	     28	   1312	    520	STM32F4Template.elf
+[100%] Built target STM32F4Template.elf-size
+[100%] Built target STM32F4Template.lss
+[100%] Built target STM32F4Template.hex
+[100%] Built target STM32F4Template

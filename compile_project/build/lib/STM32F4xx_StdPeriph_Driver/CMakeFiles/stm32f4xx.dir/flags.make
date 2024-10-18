@@ -4,7 +4,7 @@
 # compile C with C:/msys64/mingw64/bin/arm-none-eabi-gcc.exe
 C_DEFINES = -DHSE_VALUE=8000000 -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER
 
-C_INCLUDES = -IC:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/lib/STM32F4xx_StdPeriph_Driver/inc -IC:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/lib/STM32F4xx_StdPeriph_Driver/inc/cmsis
+C_INCLUDES = -IC:/msys64/Paper_CodeGeneration/compile_project/lib/STM32F4xx_StdPeriph_Driver/inc -IC:/msys64/Paper_CodeGeneration/compile_project/lib/STM32F4xx_StdPeriph_Driver/inc/cmsis
 
 C_FLAGS = -mthumb -mcpu=cortex-m4 -mlittle-endian -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb-interwork --specs=nano.specs --specs=nosys.specs  -fno-builtin -Wall -std=gnu99 -fdata-sections -ffunction-sections -g3 -gdwarf-2 -Os
 

@@ -53,10 +53,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 # Utility rule file for ocd_serve.
 
@@ -67,7 +67,7 @@ include src/CMakeFiles/ocd_serve.dir/compiler_depend.make
 include src/CMakeFiles/ocd_serve.dir/progress.make
 
 src/CMakeFiles/ocd_serve: src/STM32F4Template.elf
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && OPENOCD_EXECUTABLE-NOTFOUND -f C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/tools/stm32f4discovery.cfg --command "gdb_port 4242"
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && OPENOCD_EXECUTABLE-NOTFOUND -f C:/msys64/Paper_CodeGeneration/compile_project/tools/stm32f4discovery.cfg --command "gdb_port 4242"
 
 ocd_serve: src/CMakeFiles/ocd_serve
 ocd_serve: src/CMakeFiles/ocd_serve.dir/build.make
@@ -78,10 +78,10 @@ src/CMakeFiles/ocd_serve.dir/build: ocd_serve
 .PHONY : src/CMakeFiles/ocd_serve.dir/build
 
 src/CMakeFiles/ocd_serve.dir/clean:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/ocd_serve.dir/cmake_clean.cmake
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/ocd_serve.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/ocd_serve.dir/clean
 
 src/CMakeFiles/ocd_serve.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src/CMakeFiles/ocd_serve.dir/DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/Paper_CodeGeneration/compile_project C:/msys64/Paper_CodeGeneration/compile_project/src C:/msys64/Paper_CodeGeneration/compile_project/build C:/msys64/Paper_CodeGeneration/compile_project/build/src C:/msys64/Paper_CodeGeneration/compile_project/build/src/CMakeFiles/ocd_serve.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/ocd_serve.dir/depend
 

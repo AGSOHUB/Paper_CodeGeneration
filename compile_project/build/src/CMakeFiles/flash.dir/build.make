@@ -53,10 +53,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 # Utility rule file for flash.
 
@@ -67,7 +67,7 @@ include src/CMakeFiles/flash.dir/compiler_depend.make
 include src/CMakeFiles/flash.dir/progress.make
 
 src/CMakeFiles/flash: src/STM32F4Template.elf
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && OPENOCD_EXECUTABLE-NOTFOUND -f C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/tools/stm32f4discovery.cfg --command "program STM32F4Template.elf reset exit"
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && OPENOCD_EXECUTABLE-NOTFOUND -f C:/msys64/Paper_CodeGeneration/compile_project/tools/stm32f4discovery.cfg --command "program STM32F4Template.elf reset exit"
 
 flash: src/CMakeFiles/flash
 flash: src/CMakeFiles/flash.dir/build.make
@@ -78,10 +78,10 @@ src/CMakeFiles/flash.dir/build: flash
 .PHONY : src/CMakeFiles/flash.dir/build
 
 src/CMakeFiles/flash.dir/clean:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/flash.dir/cmake_clean.cmake
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/flash.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/flash.dir/clean
 
 src/CMakeFiles/flash.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src/CMakeFiles/flash.dir/DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/Paper_CodeGeneration/compile_project C:/msys64/Paper_CodeGeneration/compile_project/src C:/msys64/Paper_CodeGeneration/compile_project/build C:/msys64/Paper_CodeGeneration/compile_project/build/src C:/msys64/Paper_CodeGeneration/compile_project/build/src/CMakeFiles/flash.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/flash.dir/depend
 

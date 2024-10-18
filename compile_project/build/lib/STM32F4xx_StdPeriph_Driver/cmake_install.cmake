@@ -1,4 +1,4 @@
-# Install script for directory: C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/lib/STM32F4xx_StdPeriph_Driver
+# Install script for directory: C:/msys64/Paper_CodeGeneration/compile_project/lib/STM32F4xx_StdPeriph_Driver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

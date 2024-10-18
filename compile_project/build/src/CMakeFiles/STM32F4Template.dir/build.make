@@ -53,10 +53,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 # Utility rule file for STM32F4Template.
 
@@ -77,10 +77,10 @@ src/CMakeFiles/STM32F4Template.dir/build: STM32F4Template
 .PHONY : src/CMakeFiles/STM32F4Template.dir/build
 
 src/CMakeFiles/STM32F4Template.dir/clean:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/STM32F4Template.dir/cmake_clean.cmake
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/STM32F4Template.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/STM32F4Template.dir/clean
 
 src/CMakeFiles/STM32F4Template.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src/CMakeFiles/STM32F4Template.dir/DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/Paper_CodeGeneration/compile_project C:/msys64/Paper_CodeGeneration/compile_project/src C:/msys64/Paper_CodeGeneration/compile_project/build C:/msys64/Paper_CodeGeneration/compile_project/build/src C:/msys64/Paper_CodeGeneration/compile_project/build/src/CMakeFiles/STM32F4Template.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/STM32F4Template.dir/depend
 

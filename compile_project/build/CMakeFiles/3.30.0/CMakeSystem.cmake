@@ -3,7 +3,7 @@ set(CMAKE_HOST_SYSTEM_NAME "Windows")
 set(CMAKE_HOST_SYSTEM_VERSION "6.2.9200")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "AMD64")
 
-include("C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/CMake/GNU-ARM-Toolchain.cmake")
+include("C:/msys64/Paper_CodeGeneration/compile_project/CMake/GNU-ARM-Toolchain.cmake")
 
 set(CMAKE_SYSTEM "Generic-1")
 set(CMAKE_SYSTEM_NAME "Generic")

@@ -1,4 +1,4 @@
-# Install script for directory: C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+# Install script for directory: C:/msys64/Paper_CodeGeneration/compile_project
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,8 +39,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/lib/cmake_install.cmake")
-  include("C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src/cmake_install.cmake")
+  include("C:/msys64/Paper_CodeGeneration/compile_project/build/lib/cmake_install.cmake")
+  include("C:/msys64/Paper_CodeGeneration/compile_project/build/src/cmake_install.cmake")
 
 endif()
 
@@ -59,6 +59,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-  file(WRITE "C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/msys64/Paper_CodeGeneration/compile_project/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -53,10 +53,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 # Utility rule file for STM32F4Template.bin.
 
@@ -67,7 +67,7 @@ include src/CMakeFiles/STM32F4Template.bin.dir/compiler_depend.make
 include src/CMakeFiles/STM32F4Template.bin.dir/progress.make
 
 src/CMakeFiles/STM32F4Template.bin: src/STM32F4Template.elf
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && C:/msys64/mingw64/bin/arm-none-eabi-objcopy.exe -Obinary STM32F4Template.elf STM32F4Template.bin
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && C:/msys64/mingw64/bin/arm-none-eabi-objcopy.exe -Obinary STM32F4Template.elf STM32F4Template.bin
 
 STM32F4Template.bin: src/CMakeFiles/STM32F4Template.bin
 STM32F4Template.bin: src/CMakeFiles/STM32F4Template.bin.dir/build.make
@@ -78,10 +78,10 @@ src/CMakeFiles/STM32F4Template.bin.dir/build: STM32F4Template.bin
 .PHONY : src/CMakeFiles/STM32F4Template.bin.dir/build
 
 src/CMakeFiles/STM32F4Template.bin.dir/clean:
-	cd C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/STM32F4Template.bin.dir/cmake_clean.cmake
+	cd C:/msys64/Paper_CodeGeneration/compile_project/build/src && $(CMAKE_COMMAND) -P CMakeFiles/STM32F4Template.bin.dir/cmake_clean.cmake
 .PHONY : src/CMakeFiles/STM32F4Template.bin.dir/clean
 
 src/CMakeFiles/STM32F4Template.bin.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/src/CMakeFiles/STM32F4Template.bin.dir/DependInfo.cmake "--color=$(COLOR)"
+	$(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" C:/msys64/Paper_CodeGeneration/compile_project C:/msys64/Paper_CodeGeneration/compile_project/src C:/msys64/Paper_CodeGeneration/compile_project/build C:/msys64/Paper_CodeGeneration/compile_project/build/src C:/msys64/Paper_CodeGeneration/compile_project/build/src/CMakeFiles/STM32F4Template.bin.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : src/CMakeFiles/STM32F4Template.bin.dir/depend
 

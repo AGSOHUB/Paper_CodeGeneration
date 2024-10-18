@@ -1,0 +1,9 @@
+# Hashes of file build rules.
+85c8282622292aab70bc0fb06d1e3cc4 src/CMakeFiles/STM32F4Template
+6df589460e5595f9710463c77245d7dd src/CMakeFiles/STM32F4Template.bin
+b366dd97373921831b7ee02487b319a9 src/CMakeFiles/STM32F4Template.elf-size
+38bdf613cb2d11b5f3d96cc4efaaa279 src/CMakeFiles/STM32F4Template.hex
+c00b3ab6e1335b3bbf822ad7d7bf5cf7 src/CMakeFiles/STM32F4Template.lss
+d455ab5ccc8fb13465f81fde093f2df7 src/CMakeFiles/flash
+8e2071bcad5c4e802075f42ec76f7eb5 src/CMakeFiles/gdb_connect
+d57b9bbc1c2f789d37f2ea0f3a317ada src/CMakeFiles/ocd_serve

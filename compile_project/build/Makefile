@@ -57,10 +57,10 @@ RM = C:/msys64/mingw64/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project
+CMAKE_SOURCE_DIR = C:/msys64/Paper_CodeGeneration/compile_project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build
+CMAKE_BINARY_DIR = C:/msys64/Paper_CodeGeneration/compile_project/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/CMakeFiles C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/Paper_CodeGeneration/compile_project/build/CMakeFiles C:/msys64/Paper_CodeGeneration/compile_project/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/CodeGeneration_Paper/Abgabe_Bachelorarbeit/compile_project/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:/msys64/Paper_CodeGeneration/compile_project/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
