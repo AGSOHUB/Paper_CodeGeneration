@@ -1,0 +1,34 @@
+# Ignore .vscode settings
+.vscode/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore C object files and other compiled code
+*.o
+*.obj
+*.exe
+*.dll
+*.out
+*.so
+
+# Ignore FAISS index files, Python pickle files, and text files
+*.faiss
+*.pkl
+*.txt
+
+# Ignore image files (e.g., PNG)
+*.png
+
+# Ignore JSON and CSV files
+*.json
+*.csv
+
+# Ignore Env File
+.env
+
+# Push only requirements.txt
+!requirements.txt
