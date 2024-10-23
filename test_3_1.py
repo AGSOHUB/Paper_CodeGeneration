@@ -2,8 +2,9 @@ import random
 import re
 import os
 import time
-import subprocess
-import csv
+import json
+import uuid
+from datetime import datetime
 import difflib
 import matplotlib.pyplot as plt
 from implementation.helper_functions.find_missing import get_all_elements_from_codebase
@@ -12,6 +13,9 @@ from implementation.hypothesis_3_2 import fix_c_code
 from implementation.helper_functions.rag import process_c_files
 from dotenv import load_dotenv
 import os
+from interface_3 import concatenate_file
+from test_3_2 import run_build_bat, run_renode_script, read_and_clear_csv
+from run_similarity import run_similarity
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -200,44 +204,39 @@ def save_plot(x, y, xlabel, ylabel, title, filename, plot_type="line"):
     plt.close()
 
 def run_iterations_with_random_removal(num_iterations):
-    os.makedirs('plots', exist_ok=True)
-    csv_file_path = 'results/iteration_results_3_1.csv'
-    fieldnames = ['Iteration', 'API Requests', 'Total Time (seconds)', 'Compilation Success', 'Similarity with Previous', 'Similarity with Original', 'Removed Element']
+    """
+    Runs the iteration process with random element removal and logs the results in JSON format.
+    Includes build and Renode simulation steps for each iteration.
+    """
+    json_file_path = 'results/test_data_3_1.json'
+    csv_file_path = 'results/simulation_test.csv'
 
-    with open(csv_file_path, mode='w', newline='') as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-        writer.writeheader()
+    # Check if the JSON file exists, if not create it with initial structure
+    if os.path.exists(json_file_path):
+        with open(json_file_path, 'r') as json_file:
+            test_data = json.load(json_file)
+    else:
+        test_data = {"test_data_3_1": []}
 
     previous_file_path = None
     original_concatenated_file_path = None
-
-    iteration_numbers = []
-    variances_with_previous = []
-    variances_with_original = []
-    api_requests = []
-    total_times = []
-    compilation_successes = []
-    removed_elements = []
 
     for i in range(num_iterations):
         process_c_files(r"compile_project\src")
         state = {'iteration': i + 1, 'api_requests': 0, 'total_time': 0.0}
 
-
-        
         elements = get_all_elements_from_codebase()
 
         source_code_path = r'compile_project\src\microcontroller_hal.h'
         removed_element = remove_random_element(elements, source_code_path)
+
         start_time = time.time()
-        fixed_code = fix_c_code(source_code_path, [r'\compile_project\include'])
+        fixed_code = fix_c_code(source_code_path)
         elapsed_time = time.time() - start_time
         concatenated_file_path = f'output/concatenated_code_iteration_{i+1}.c'
         concatenate_files(concatenated_file_path)
 
-
         state['total_time'] = elapsed_time
-
         compilation_success = compile_code(r'compile_project\src\main.c')
 
         # If this is the first iteration, save the concatenated file path as the original reference
@@ -250,40 +249,57 @@ def run_iterations_with_random_removal(num_iterations):
             variance_with_previous = calculate_code_similarity(previous_file_path, concatenated_file_path)
         variance_with_original = calculate_code_similarity(original_concatenated_file_path, concatenated_file_path)
 
-        iteration_numbers.append(i + 1)
-        variances_with_previous.append(variance_with_previous)
-        variances_with_original.append(variance_with_original)
-        api_requests.append(state['api_requests'])
-        total_times.append(state['total_time'])
-        compilation_successes.append(int(compilation_success))
-        removed_elements.append(removed_element if removed_element else "None")
+        # Run the build.bat file
+        run_build_bat()
 
-        with open(csv_file_path, mode='a', newline='') as csv_file:
-            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-            writer.writerow({
-                'Iteration': i + 1,
-                'API Requests': state['api_requests'],
-                'Total Time (seconds)': state['total_time'],
-                'Compilation Success': compilation_success,
-                'Similarity with Previous': variance_with_previous,
-                'Similarity with Original': variance_with_original,
-                'Removed Element': removed_element if removed_element else "None"
-            })
+        # Run the Renode simulation
+        run_renode_script()
 
+        # Read the Functioning code binary from the CSV and clear the file
+        functioning_code_binary = read_and_clear_csv(csv_file_path)
+
+        # Create a unique ID and timestamp for the new entry
+        unique_id = str(uuid.uuid4())
+        timestamp = datetime.now().isoformat()
+
+        # Prepare the new entry
+        new_entry = {
+            "unique_id": unique_id,
+            "timestamp": timestamp,
+            "total time (seconds)": state['total_time'],
+            "compilation-success": compilation_success,
+            "Similarity with Previous": variance_with_previous,
+            "Similarity with Original": variance_with_original,
+            "Removed Element": removed_element if removed_element else "None",
+            "Functioning code Binary": functioning_code_binary,
+            "Code": concatenate_file(),
+        }
+
+        # Append the new entry to the test data
+        test_data["test_data_3_1"].append(new_entry)
+
+        # Save the new entry to the JSON file
+        with open(json_file_path, 'w') as json_file:
+            json.dump(test_data, json_file, indent=4)
+
+        # Save the current concatenated file as the previous file for the next iteration
         previous_file_path = concatenated_file_path
 
+        print(f"Test Iteration {i + 1} finished. Results saved to {json_file_path}.")
+
+    print(f"Completed {num_iterations} iterations.")
 
 
-    print(f"Completed {num_iterations} iterations. Results saved to {csv_file_path}.")
 
-
+run_similarity('results/test_data_3_1.json')
 # reset everything to ensure working code
 clear_all_files()
 process_c_files(r"compile_project\src")
 source_code_path = r'compile_project\src\main.c'
 include_directories = [r'\compile_project\include']
 
-fixed_code = fix_c_code(source_code_path, include_directories)
+fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process with random element removal 100 times
-run_iterations_with_random_removal(100)
+run_iterations_with_random_removal(0)
+

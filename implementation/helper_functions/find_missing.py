@@ -145,42 +145,34 @@ def get_all_elements_from_codebase():
     # Path to the fake includes directory
     fake_includes = r"compile_project\fake_libc_include"
 
-    # Preprocess the C file using gcc with fake includes
+    # Preprocess the main C file using gcc with fake includes
     preprocessed_file = r'compile_project\src\main.i'
+    main_c_path = r'compile_project\src\main.c'
 
-    main_c_path =  r'compile_project\src\main.c'
-    main_c_dir = os.path.dirname(main_c_path)
-
-    # Collect all .c files in the directory
-    c_files = [os.path.join(main_c_dir, f) for f in os.listdir(main_c_dir) if f.endswith('.c')]
-
-    # Create a visitor and visit the AST
+    # Create a visitor for function discovery
     visitor = FunctionVisitor()
 
-    # Preprocess all .c files
-    for c_file in c_files:
-        subprocess.run(['gcc', '-E', '-I', fake_includes, c_file, '-o', preprocessed_file], check=True)
+    # Preprocess the main C file
+    subprocess.run(['gcc', '-E', '-I', fake_includes, main_c_path, '-o', preprocessed_file], check=True)
+    # Read the preprocessed file content
+    with open(preprocessed_file, 'r') as file:
+        content = file.read()
 
-        # Read the preprocessed file content
-        with open(preprocessed_file, 'r') as file:
-            content = file.read()
+    # Replace hexadecimal constants (e.g., 0x40020800) with decimal equivalents
+    content = re.sub(r'0x([0-9A-Fa-f]+)', lambda x: str(int(x.group(0), 16)), content)
 
-        # Replace hexadecimal constants (e.g., 0x40020800) with decimal equivalents
-        content = re.sub(r'0x([0-9A-Fa-f]+)', lambda x: str(int(x.group(0), 16)), content)
+    # Write the modified content back to the preprocessed file
+    with open(preprocessed_file, 'w') as file:
+        file.write(content)
 
-        # Write the modified content back to the preprocessed file
-        with open(preprocessed_file, 'w') as file:
-            file.write(content)
+    # Parse the preprocessed file
+    parser = CParser()
+    try:
+        ast = parse_file(preprocessed_file, use_cpp=False)
+    except Exception as e:
+        print(f"Error parsing {main_c_path}: {e}")
 
-        # Parse the preprocessed file
-        parser = CParser()
-        try:
-            ast = parse_file(preprocessed_file, use_cpp=False)
-        except Exception as e:
-            print(f"Error parsing {c_file}: {e}")
-            continue
-
-        visitor.visit(ast)
+    visitor.visit(ast)
 
     # Collect all identifiers into lists
     all_elements = {

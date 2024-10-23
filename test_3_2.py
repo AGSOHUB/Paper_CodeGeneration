@@ -10,6 +10,7 @@ import json
 import uuid
 from datetime import datetime
 import csv
+from run_similarity import run_similarity
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -79,6 +80,8 @@ def run_renode_script():
         print("Renode script executed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to execute Renode script: {e}")
+
+        
 def read_and_clear_csv(file_path):
     """
     Reads a number from the given CSV file and erases its content.
@@ -193,4 +196,6 @@ source_code_path = r'compile_project\src\main.c'
 fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process 10 times
-run_iterations_without_interface(10)
+run_iterations_without_interface(1)
+
+run_similarity()

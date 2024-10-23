@@ -2,220 +2,148 @@
 
 //typedefs.h 
 
-//variables 
 
+// Define the offset for the USART_CR1 register in the STM32F407 microcontroller.
+// This offset is used to access the control register 1 of the USART peripheral.
+// The value is hardcoded based on the STM32F407 reference manual.
+#define USART_CR1_OFFSET ((uint32_t)0x000C)
 
-// Define the GPIO mode for input
-#define GPIO_MODE_INPUT 0x00U // 0x00U is the value for input mode in STM32F407
+// Define the offset for the Data Register (DR) of the USART peripheral.
+// This offset is used to access the data register of a USART peripheral
+// on the STM32F407 microcontroller. The value is based on the reference
+// manual for the STM32F407, which specifies the offset for the DR register
+// within the USART peripheral's register map.
+#define USART_DR_OFFSET ((uint32_t)0x04)
 
+// Define the USART_FLAG_TXE variable for the STM32F407 board
+// This flag is used to indicate that the transmit data register is empty
+// and ready to accept new data for transmission. It is a part of the USART
+// status register (USART_SR) and is typically used in USART communication
+// to check if the transmitter is ready to send more data.
+#define USART_FLAG_TXE ((uint16_t)0x0080)
 
+// Define the base address for USART2 peripheral on the STM32F407 board.
+// This address is used to access the USART2 registers for configuration and data transmission.
+// The base address is specific to the STM32F407 microcontroller.
+#define USART2_BASE ((uint32_t)0x40004400)
 
-// Define the base address for GPIOA port
-#define GPIOA ((uint32_t)0x40020000)
+#define RCC_BASE ((uint32_t)0x40023800) // Base address for the Reset and Clock Control (RCC) registers on the STM32F407 board
 
+// Define the offset for the Baud Rate Register (BRR) in the USART peripheral
+// This offset is used to calculate the address of the BRR register for a given USART instance
+// The value is based on the STM32F407 reference manual, where the BRR register is located
+// at an offset of 0x08 from the base address of the USART peripheral.
+#define USART_BRR_OFFSET ((uint32_t)0x08)
 
+// USART_SR_OFFSET is the offset for the Status Register of the USART peripheral.
+// This offset is used to access the status register from the base address of a USART peripheral.
+// The value is derived from the STM32F407 reference manual.
+#define USART_SR_OFFSET ((uint32_t)0x00)
 
-// Define GPIO_PIN_4 for STM32F407 board
-#define GPIO_PIN_4 ((uint16_t)0x0010) // GPIO pin 4 is represented by the 5th bit (0x0010) in the GPIO port register
-
-
-
-// Define GPIOB base address for STM32F407 board
-#define GPIOB ((uint32_t)0x40020400)
-
-
-
-// Define GPIO_PIN_2 for STM32F407 board
-#define GPIO_PIN_2 ((uint16_t)0x0004) // Pin 2 is represented by the 3rd bit (0x0004) in the GPIO port register
-
-
-
-// Define GPIO_PIN_5 for STM32F407 board
-#define GPIO_PIN_5 ((uint16_t)0x0020) // GPIO pin 5 is represented by the bit mask 0x0020
-
-
-
-// Define the GPIO mode for output push-pull
-#define GPIO_MODE_OUTPUT_PP ((uint32_t)0x00000001) // 0x00000001 represents the mode for output push-pull
-
-
-
-// Define GPIO_PIN_3 for STM32F407 board
-#define GPIO_PIN_3 ((uint16_t)0x0008) // GPIO pin 3 is represented by the 4th bit (0x0008)
-
-
-
-// Define GPIO_PIN_6 for STM32F407 board
-#define GPIO_PIN_6 ((uint16_t)0x0040) // GPIO pin 6 is represented by the bit mask 0x0040
-
-
-
-// Define GPIO_PIN_1 for STM32F407 board
-#define GPIO_PIN_1 ((uint16_t)0x0002) // GPIO pin 1 is represented by the bit mask 0x0002
-
+// Define the offset for the AHB1 peripheral clock enable register in the RCC
+// This offset is used to access the RCC_AHB1ENR register, which controls the clock
+// for the AHB1 peripherals on the STM32F407 board.
+#define RCC_AHB1ENR_OFFSET ((uint32_t)0x30)
 
 //microcontroller_h.h 
  
 
-/**
- * @brief  Enables the clock for GPIOA port.
- * @param  None
- * @retval None
- */
-void ENABLE_GPIOA_CLOCK(void) {
-    // Define the base address for RCC (Reset and Clock Control)
-    const uint32_t RCC_BASE = 0x40023800;
-    // Define the offset for AHB1ENR (AHB1 peripheral clock enable register)
-    const uint32_t RCC_AHB1ENR_OFFSET = 0x30;
-    // Define the bit position for GPIOA clock enable
-    const uint32_t GPIOAEN_BIT_POS = 0;
-    // Calculate the address of RCC_AHB1ENR
-    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(RCC_BASE + RCC_AHB1ENR_OFFSET);
-    // Enable the clock for GPIOA by setting the corresponding bit in RCC_AHB1ENR
-    *RCC_AHB1ENR |= (1 << GPIOAEN_BIT_POS);
-}
-// Function to enable the clock for GPIOC
-void ENABLE_GPIOC_CLOCK(void) {
-    // RCC_AHB1ENR register base address
-    const uint32_t RCC_BASE = 0x40023800;
-    // Offset for AHB1 peripheral clock enable register
-    const uint32_t RCC_AHB1ENR_OFFSET = 0x30;
-    // Bit position for GPIOC clock enable
-    const uint32_t GPIOC_EN_BIT_POS = 2;
-    // Calculate the address of the RCC_AHB1ENR register
-    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(RCC_BASE + RCC_AHB1ENR_OFFSET);
-    // Enable the clock for GPIOC by setting the corresponding bit
-    *RCC_AHB1ENR |= (1 << GPIOC_EN_BIT_POS);
-}
-/**
- * @brief Reads the state of a specified GPIO pin.
- * 
- * This function reads the state of a GPIO pin on the STM32F407 board.
- * It calculates the bit position of the pin and reads the corresponding bit
- * from the input data register (IDR) of the specified port.
- * 
- * @param port_base The base address of the GPIO port (e.g., GPIOA, GPIOB).
- * @param pin The pin number to read (e.g., GPIO_PIN_1, GPIO_PIN_2).
- * @return int The state of the pin (0 or 1).
- */
-int hardware_abstraction_layer_function_gpio_read_pin(uint32_t port_base, uint16_t pin) {
-    // Calculate the bit position of the pin
-    uint8_t pin_position = 0;
-    while (pin > 1) {
-        pin >>= 1;
-        pin_position++;
-    }
-    // Read the input data register (IDR) of the specified port
-    volatile uint32_t *idr = (volatile uint32_t *)(port_base + 0x10);
-    // Return the state of the pin (0 or 1)
-    return (*idr & (1 << pin_position)) ? 1 : 0;
-}
+
+// Function to set the mode of a GPIO pin as input or output
+// Parameters:
+// - port_base: Base address of the GPIO port (e.g., 0x40020000 for GPIOA)
+// - pin_mask: Bitmask representing the pin (e.g., 1 << 5 for pin 5)
+// - mode: 0 for input, 1 for output
 /**
  * @brief Toggles the state of a specified GPIO pin.
  * 
- * This function toggles the state of a GPIO pin by directly manipulating the
- * Output Data Register (ODR) of the specified GPIO port. It ensures atomic
- * and reliable operations using bitwise operations.
+ * This function directly manipulates the Output Data Register (ODR) of a GPIO port
+ * to toggle the state of a specific pin. It uses bitwise operations to ensure atomic
+ * and reliable toggling of the pin state.
  * 
- * @param port_base The base address of the GPIO port.
- * @param pin The pin number to toggle.
+ * @param gpio_port_base The base address of the GPIO port (e.g., 0x40020000 for GPIOA).
+ * @param pin_mask The bitmask representing the pin to toggle (e.g., 1 << 5 for pin 5).
  */
-void hardware_abstraction_layer_function_gpio_toggle_pin(uint32_t port_base, uint16_t pin) {
-    // Calculate the bit position of the pin
-    uint32_t pin_position = 0;
-    for (uint16_t temp_pin = pin; temp_pin > 1; temp_pin >>= 1) {
-        pin_position++;
-    }
-    // Pointer to the Output Data Register (ODR) of the specified port
-    volatile uint32_t *odr = (volatile uint32_t *)(port_base + 0x14);
-    // Toggle the pin by using bitwise XOR operation
-    *odr ^= (1 << pin_position);
+void hardware_abstraction_layer_function_gpio_toggle_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
+    // Calculate the address of the Output Data Register (ODR) for the given GPIO port
+    volatile uint32_t *ODR = (uint32_t *)(gpio_port_base + 0x14);
+    // Toggle the pin by XORing the ODR with the pin mask
+    *ODR ^= pin_mask;
 }
 /**
- * @brief Delays the execution for a specified amount of time.
- * @param delay_ms: The delay duration in milliseconds.
+ * @brief Enables the clock for GPIOA on the STM32F407 board.
+ * 
+ * This function directly manipulates the RCC AHB1 peripheral clock enable register
+ * to enable the clock for GPIOA. It ensures that the GPIOA peripheral is powered
+ * and ready for use.
+ * 
+ * @param None
  * @return None
  */
-void hardware_abstraction_layer_function_delay(uint32_t delay_ms) {
-    // Assuming a system clock of 16 MHz and SysTick configured to 1 ms tick
-    volatile uint32_t count;
-    for (uint32_t i = 0; i < delay_ms; i++) {
-        // Each iteration of this loop takes approximately 1 ms
-        count = 16000; // Number of cycles for 1 ms delay at 16 MHz
-        while (count--) {
-            // Wait until count reaches zero
-        }
-    }
+void ENABLE_GPIOA_CLOCK(void) {
+    // Define the base address for the RCC and the offset for the AHB1ENR register
+    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(0x40023800 + 0x30);
+    // Set the bit corresponding to GPIOA (bit 0) to enable its clock
+    *RCC_AHB1ENR |= (1 << 0);
 }
 /**
- * @brief Write a value to a specific GPIO pin.
+ * @brief Reads the state of a specific GPIO pin.
  * 
- * This function writes a value to a specific GPIO pin on a given port.
- * It directly manipulates the output data register (ODR) to ensure atomic and reliable operations.
+ * This function reads the state of a GPIO pin by accessing the input data register (IDR)
+ * of the specified GPIO port. It calculates the bit position of the pin using a loop
+ * and returns the state of the pin.
  * 
- * @param port_base The base address of the GPIO port.
- * @param pin The specific pin number to write to.
- * @param value The value to write to the pin (0 or 1).
+ * @param gpio_port_base The base address of the GPIO port (e.g., 0x40020000 for GPIOA).
+ * @param pin_mask The mask of the pin to read (e.g., 1 << 5 for pin 5).
+ * @return 1 if the pin is high, 0 if the pin is low.
  */
-void hardware_abstraction_layer_function_gpio_write_pin(uint32_t port_base, uint16_t pin, uint8_t value) {
-    // Calculate the bit position of the pin
+int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
+    // Pointer to the input data register (IDR) of the GPIO port
+    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 0x10);
+    // Calculate the pin position by finding the first set bit in the pin_mask
     uint32_t pin_position = 0;
-    for (uint16_t temp_pin = pin; temp_pin > 1; temp_pin >>= 1) {
+    while ((pin_mask >> pin_position) != 1) {
         pin_position++;
     }
-    // Get the address of the output data register (ODR)
-    volatile uint32_t *odr = (volatile uint32_t *)(port_base + 0x14);
-    // Write the value to the pin
+    // Read the pin state from the IDR and return it
+    return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
+}
+// Function to set the mode of a GPIO pin as input or output
+// Parameters:
+// - port_base: Base address of the GPIO port (e.g., 0x40020000 for GPIOA)
+// - pin_mask: Bitmask representing the pin (e.g., 1 << 5 for pin 5)
+// - mode: 0 for input, 1 for output
+void set_input_output_mode(uint32_t port_base, uint32_t pin_mask, uint8_t mode) {
+    // Calculate the pin position by finding the first set bit in pin_mask
+    uint8_t pin_position = 0;
+    while ((pin_mask >> pin_position) != 1) {
+        pin_position++;
+    }
+    // Calculate the address of the GPIO mode register (MODER)
+    volatile uint32_t *GPIO_MODER = (uint32_t *)(port_base + 0x00);
+    // Clear the two bits corresponding to the pin position
+    *GPIO_MODER &= ~(0x3 << (pin_position * 2));
+    // Set the mode: 0x1 for output, 0x0 for input
+    *GPIO_MODER |= (mode << (pin_position * 2));
+}
+
+void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base, uint32_t pin_mask, uint32_t value) {
+    // Pointer to the output data register (ODR) of the GPIO port
+    volatile uint32_t *GPIO_ODR = (uint32_t *)(gpio_port_base + 0x14);
+
+    // Calculate the pin position by finding the first set bit in the pin_mask
+    uint32_t pin_position = 0;
+    while ((pin_mask >> pin_position) != 1) {
+        pin_position++;
+    }
+
+    // Use bitwise operations to set or reset the pin
     if (value) {
-        *odr |= (1 << pin_position);  // Set the pin
+        // Set the pin to high
+        *GPIO_ODR |= (1 << pin_position);
     } else {
-        *odr &= ~(1 << pin_position); // Clear the pin
+        // Set the pin to low
+        *GPIO_ODR &= ~(1 << pin_position);
     }
 }
-/**
- * @brief Configures the mode of a specific GPIO pin.
- * 
- * This function sets the mode of a GPIO pin to either input or output.
- * It directly manipulates the GPIO registers to configure the pin mode.
- * 
- * @param port_base The base address of the GPIO port.
- * @param pin The specific pin number to configure.
- * @param mode The mode to set for the pin (e.g., GPIO_MODE_INPUT, GPIO_MODE_OUTPUT_PP).
- */
-void set_input_output_mode(uint32_t port_base, uint16_t pin, uint32_t mode) {
-    // Calculate the pin position
-    uint32_t pin_pos = 0;
-    for (uint16_t temp_pin = pin; temp_pin > 1; temp_pin >>= 1) {
-        pin_pos++;
-    }
-    // Calculate the register and bit position for the mode configuration
-    uint32_t mode_reg_offset = (pin_pos / 8) * 4; // Each register controls 8 pins
-    uint32_t mode_bit_pos = (pin_pos % 8) * 4;    // Each pin has 4 bits for mode configuration
-    // Calculate the address of the mode register
-    volatile uint32_t *mode_reg = (volatile uint32_t *)(port_base + 0x00 + mode_reg_offset);
-    // Clear the current mode bits for the pin
-    *mode_reg &= ~(0xF << mode_bit_pos);
-    // Set the new mode bits for the pin
-    *mode_reg |= (mode << mode_bit_pos);
-}
-
-
-/**
- * @brief  Enables the clock for GPIO port B.
- * @param  None
- * @retval None
- */
-void ENABLE_GPIOB_CLOCK(void) {
-    // Define the base address for RCC (Reset and Clock Control)
-    const uint32_t RCC_BASE = 0x40023800;
-    // Define the offset for AHB1ENR (AHB1 peripheral clock enable register)
-    const uint32_t RCC_AHB1ENR_OFFSET = 0x30;
-    // Define the bit position for GPIOB clock enable
-    const uint32_t GPIOBEN_BIT_POS = 1;
-    // Calculate the address of RCC_AHB1ENR
-    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(RCC_BASE + RCC_AHB1ENR_OFFSET);
-    // Enable the clock for GPIOB by setting the corresponding bit in RCC_AHB1ENR
-    *RCC_AHB1ENR |= (1 << GPIOBEN_BIT_POS);
-}
-
 
