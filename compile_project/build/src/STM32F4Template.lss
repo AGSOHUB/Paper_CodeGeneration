@@ -78,13 +78,13 @@ void ENABLE_GPIOA_CLOCK(void) {
 // Function to set the mode of a GPIO pin as input or output
 // Parameters:
 // - gpio_base: Base address of the GPIO port (e.g., 0x40020000 for GPIOA)
-// - pin_mask: Bitmask representing the pin (e.g., 1 << 5 for pin 5)
+// - pin_mask: Bit mask for the pin (e.g., 1 << 5 for pin 5)
 // - mode: 0 for input, 1 for output
 void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) {
  80001dc:	b530      	push	{r4, r5, lr}
-    // Calculate the pin number from the pin mask
-    uint8_t pin_number = 0;
-    while ((pin_mask >> pin_number) != 1) {
+    // Calculate the pin position from the pin mask
+    uint8_t pin_position = 0;
+    while ((pin_mask >> pin_position) != 1) {
  80001de:	2400      	movs	r4, #0
  80001e0:	b2e3      	uxtb	r3, r4
  80001e2:	fa21 f503 	lsr.w	r5, r1, r3
@@ -95,8 +95,8 @@ void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) 
     // Calculate the address of the GPIO mode register (MODER)
     volatile uint32_t *GPIO_MODER = (uint32_t *)(gpio_base + 0x00);
 
-    // Clear the two bits corresponding to the pin in the MODER register
-    *GPIO_MODER &= ~(0x3 << (pin_number * 2));
+    // Clear the two bits corresponding to the pin position
+    *GPIO_MODER &= ~(0x3 << (pin_position * 2));
  80001ee:	6801      	ldr	r1, [r0, #0]
  80001f0:	005b      	lsls	r3, r3, #1
  80001f2:	2403      	movs	r4, #3
@@ -104,8 +104,8 @@ void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) 
  80001f6:	ea21 0104 	bic.w	r1, r1, r4
  80001fa:	6001      	str	r1, [r0, #0]
 
-    // Set the mode for the pin (0x1 for output, 0x0 for input)
-    *GPIO_MODER |= (mode << (pin_number * 2));
+    // Set the mode: 0x1 for output, 0x0 for input
+    *GPIO_MODER |= (mode << (pin_position * 2));
  80001fc:	6801      	ldr	r1, [r0, #0]
  80001fe:	409a      	lsls	r2, r3
  8000200:	430a      	orrs	r2, r1
@@ -159,11 +159,11 @@ void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base,
  8000228:	e7f7      	b.n	800021a <hardware_abstraction_layer_function_gpio_write_pin+0x14>
 
 0800022a <hardware_abstraction_layer_function_gpio_read_pin>:
-int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
+int hardware_abstraction_layer_function_gpio_read_pin(uint32_t port_base_address, uint32_t pin_mask) {
     // Pointer to the input data register (IDR) of the specified GPIO port
-    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 0x10);
+    volatile uint32_t *GPIO_IDR = (uint32_t *)(port_base_address + 0x10);
 
-    // Calculate the pin position by finding the first set bit in the pin_mask
+    // Calculate the pin position by finding the first set bit in the pin mask
     uint32_t pin_position = 0;
  800022a:	2200      	movs	r2, #0
     while ((pin_mask >> pin_position) != 1) {
@@ -173,7 +173,7 @@ int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, u
         pin_position++;
     }
 
-    // Read the pin state from the IDR and return it
+    // Read the pin state from the IDR and return 1 if high, 0 if low
     return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
  8000234:	6901      	ldr	r1, [r0, #16]
  8000236:	4093      	lsls	r3, r2

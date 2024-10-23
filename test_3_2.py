@@ -18,24 +18,29 @@ def run_build_bat():
     """
     Runs the build.bat file from the correct working directory using MSYS2 shell.
     """
-    # Path to MSYS2's mintty executable
-    mintty_path = r'C:\msys64\usr\bin\mintty.exe'
+    # Save the initial working directory
+    initial_directory = os.getcwd()
 
-    # Commands to execute
-    commands = '''
-    cd /
-    cd Paper_CodeGeneration/compile_project
-    ./build.bat
-    '''
+    # Relative path to the 'compile_project' directory
+    build_directory = os.path.join(initial_directory, 'compile_project')
 
-    # Combine the commands into a single string
-    command_str = ' && '.join([cmd.strip() for cmd in commands.strip().split('\n')])
+    # Path to the batch file (build.bat) within the relative directory
+    build_bat = os.path.join(build_directory, 'build.bat')
 
-    subprocess.Popen([
-        mintty_path,
-        '-i',  # Start as interactive shell
-        'C:/msys64/Paper_CodeGeneration/agsotec_icon.ico', '/usr/bin/bash', '--login', '-i', '-c', command_str
-    ])
+    try:
+        # Change the current working directory to the relative 'compile_project' directory
+        os.chdir(build_directory)
+
+        # Execute the batch file using subprocess
+        process = subprocess.Popen([build_bat], shell=True)
+        
+        # Wait for the batch process to complete
+        process.wait()
+
+    finally:
+        # After the process is done, navigate back to the initial directory
+        os.chdir(initial_directory)
+
 
 
 def run_renode_script():

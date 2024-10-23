@@ -1,20 +1,14 @@
 import subprocess
+import os
 
-# Path to MSYS2's mintty executable
-mintty_path = r'C:\msys64\usr\bin\mintty.exe'
+# Path to the directory where the batch file is located
+build_directory = r'C:\msys64\Paper_CodeGeneration\compile_project'
 
-# Commands to execute
-commands = '''
-cd /
-cd Paper_CodeGeneration/compile_project
-./build.bat
-'''
+# Path to the batch file (build.bat)
+build_bat = os.path.join(build_directory, 'build.bat')
 
-# Combine the commands into a single string
-command_str = ' && '.join([cmd.strip() for cmd in commands.strip().split('\n')])
+# Change the current working directory to where the batch file is located
+os.chdir(build_directory)
 
-subprocess.Popen([
-    mintty_path,
-    '-i',  # Start as interactive shell
-    'C:/msys64/Paper_CodeGeneration/agsotec_icon.ico', '/usr/bin/bash', '--login', '-i', '-c', command_str
-])
+# Execute the batch file using subprocess
+subprocess.Popen([build_bat], shell=True)
