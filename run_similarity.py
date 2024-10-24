@@ -194,7 +194,7 @@ def run_similarity(test_version):
     plt.legend()
 
     # Save the plot to a file
-    plt.savefig('code_similarity_plot.png')
+    plt.savefig(f'code_similarity_plot{test_version}.png')
 
     # Display the plot
     plt.show()
