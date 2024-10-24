@@ -32,3 +32,4 @@ __pycache__/
 
 # Push only requirements.txt
 !requirements.txt
+!CMakeLists.txt
