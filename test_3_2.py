@@ -4,107 +4,15 @@ from interface_3 import concatenate_file
 from implementation.test_functions import clear_all_files, compile_code
 from dotenv import load_dotenv
 import os
-import subprocess
 import time
 import json
 import uuid
 from datetime import datetime
-import csv
-from run_similarity import run_similarity
+from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_clear_csv
+
 
 load_dotenv()  # Load environment variables from .env file
 
-
-def run_build_bat():
-    """
-    Runs the build.bat file from the correct working directory using MSYS2 shell.
-    """
-    # Save the initial working directory
-    initial_directory = os.getcwd()
-
-    # Relative path to the 'compile_project' directory
-    build_directory = os.path.join(initial_directory, 'compile_project')
-
-    # Path to the batch file (build.bat) within the relative directory
-    build_bat = os.path.join(build_directory, 'build.bat')
-
-    try:
-        # Change the current working directory to the relative 'compile_project' directory
-        os.chdir(build_directory)
-
-        # Execute the batch file using subprocess
-        process = subprocess.Popen([build_bat], shell=True)
-        
-        # Wait for the batch process to complete
-        process.wait()
-
-    finally:
-        # After the process is done, navigate back to the initial directory
-        os.chdir(initial_directory)
-
-
-
-def run_renode_script():
-    """
-    Runs the Renode script to execute the simulation and generate the CSV file.
-    """
-    renode_script_path = r'C:\msys64\Paper_CodeGeneration\run_simulation_script.resc'
-    
-    # Write the Renode script to a file
-    renode_script_content = """
-    mach create
-    machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
-    sysbus LoadELF "C:/msys64/Paper_CodeGeneration/compile_project/build/src/STM32F4Template.elf"
-    
-    # Set log level to capture messages for USART2
-    logLevel -1 sysbus.usart2
-    
-    # Record USART2 output directly to a CSV file
-    sysbus.usart2 CreateFileBackend @C:/msys64/Paper_CodeGeneration/results/simulation_test.csv
-    showAnalyzer sysbus.usart2
-    start
-    
-    # Pause for 5 seconds to let the simulation run before quitting
-    sleep 5
-    
-    # Close Renode after the simulation
-    quit
-    """
-    
-    with open(renode_script_path, 'w') as renode_file:
-        renode_file.write(renode_script_content)
-
-    # Now run the Renode CLI with the script
-    try:
-        subprocess.run(["renode", renode_script_path], check=True)
-        print("Renode script executed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to execute Renode script: {e}")
-
-        
-def read_and_clear_csv(file_path):
-    """
-    Reads a number from the given CSV file and erases its content.
-    Assumes the number is stored in the first cell of the CSV.
-    """
-    number = None
-    # Read the number from the CSV
-    with open(file_path, 'r') as csvfile:
-        csvreader = csv.reader(csvfile)
-        for row in csvreader:
-            if row:  # If the row contains data
-                number = row[0]
-                break
-
-    # Erase the content of the file
-    with open(file_path, 'w') as csvfile:
-        csvfile.write("")
-
-    return number
-
-load_dotenv()  # Load environment variables from .env file
-
-api_key = os.getenv("OPENAI_API_KEY")
 
 
 def run_iterations_without_interface(num_iterations):
@@ -153,7 +61,6 @@ def run_iterations_without_interface(num_iterations):
         unique_id = str(uuid.uuid4())
         timestamp = datetime.now().isoformat()
 
-
         # Run the build.bat file
         run_build_bat()
 
@@ -198,4 +105,4 @@ fixed_code = fix_c_code(source_code_path)
 # Run the iteration process 10 times
 run_iterations_without_interface(1)
 
-run_similarity()
+run_similarity('test_data_3_2')

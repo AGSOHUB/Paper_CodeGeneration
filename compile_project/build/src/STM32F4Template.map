@@ -575,7 +575,7 @@ END GROUP
 LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtend.o
 LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
 
-.text           0x08000000      0x4fc
+.text           0x08000000      0x504
  *(.isr_vector)
  .isr_vector    0x08000000      0x188 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
                 0x08000000                g_pfnVectors
@@ -584,140 +584,142 @@ LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/c
                 0x08000188       0x24 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
  .text.frame_dummy
                 0x080001ac       0x1c C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
- .text.ENABLE_GPIOA_CLOCK
-                0x080001c8       0x14 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x080001c8                ENABLE_GPIOA_CLOCK
  .text.set_input_output_mode
-                0x080001dc       0x2a CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x080001dc                set_input_output_mode
- .text.hardware_abstraction_layer_function_gpio_write_pin
-                0x08000206       0x24 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x08000206                hardware_abstraction_layer_function_gpio_write_pin
+                0x080001c8       0x2e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x080001c8                set_input_output_mode
  .text.hardware_abstraction_layer_function_gpio_read_pin
-                0x0800022a       0x1c CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x0800022a                hardware_abstraction_layer_function_gpio_read_pin
+                0x080001f6       0x1c CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x080001f6                hardware_abstraction_layer_function_gpio_read_pin
+ .text.hardware_abstraction_layer_function_gpio_write_pin
+                0x08000212       0x24 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x08000212                hardware_abstraction_layer_function_gpio_write_pin
+ *fill*         0x08000236        0x2 
+ .text.ENABLE_GPIOA_CLOCK
+                0x08000238       0x14 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x08000238                ENABLE_GPIOA_CLOCK
  .text.usart2_init
-                0x08000246       0x1e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x08000246                usart2_init
- .text.print    0x08000264       0x2e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x08000264                print
+                0x0800024c       0x1e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x0800024c                usart2_init
+ .text.print    0x0800026a       0x2e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x0800026a                print
  .text.int_to_string
-                0x08000292       0x5e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x08000292                int_to_string
+                0x08000298       0x5e CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x08000298                int_to_string
+ *fill*         0x080002f6        0x2 
  .text.startup.main
-                0x080002f0       0x60 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                0x080002f0                main
+                0x080002f8       0x60 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                0x080002f8                main
  .text.SystemInit
-                0x08000350       0xf4 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
-                0x08000350                SystemInit
+                0x08000358       0xf4 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+                0x08000358                SystemInit
  .text.Reset_Handler
-                0x08000444       0x48 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
-                0x08000444                Reset_Handler
+                0x0800044c       0x48 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+                0x0800044c                Reset_Handler
  .text.Default_Handler
-                0x0800048c        0x2 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
-                0x0800048c                RTC_Alarm_IRQHandler
-                0x0800048c                HASH_RNG_IRQHandler
-                0x0800048c                EXTI2_IRQHandler
-                0x0800048c                TIM8_CC_IRQHandler
-                0x0800048c                DebugMon_Handler
-                0x0800048c                TIM1_CC_IRQHandler
-                0x0800048c                DMA2_Stream5_IRQHandler
-                0x0800048c                HardFault_Handler
-                0x0800048c                DMA1_Stream5_IRQHandler
-                0x0800048c                SysTick_Handler
-                0x0800048c                PVD_IRQHandler
-                0x0800048c                SDIO_IRQHandler
-                0x0800048c                TAMP_STAMP_IRQHandler
-                0x0800048c                PendSV_Handler
-                0x0800048c                NMI_Handler
-                0x0800048c                CAN2_RX1_IRQHandler
-                0x0800048c                EXTI3_IRQHandler
-                0x0800048c                TIM8_TRG_COM_TIM14_IRQHandler
-                0x0800048c                TIM1_UP_TIM10_IRQHandler
-                0x0800048c                TIM8_UP_TIM13_IRQHandler
-                0x0800048c                I2C3_ER_IRQHandler
-                0x0800048c                EXTI0_IRQHandler
-                0x0800048c                I2C2_EV_IRQHandler
-                0x0800048c                DMA1_Stream2_IRQHandler
-                0x0800048c                CAN1_RX0_IRQHandler
-                0x0800048c                FPU_IRQHandler
-                0x0800048c                OTG_HS_WKUP_IRQHandler
-                0x0800048c                UsageFault_Handler
-                0x0800048c                CAN2_SCE_IRQHandler
-                0x0800048c                DMA2_Stream2_IRQHandler
-                0x0800048c                SPI1_IRQHandler
-                0x0800048c                TIM6_DAC_IRQHandler
-                0x0800048c                TIM1_BRK_TIM9_IRQHandler
-                0x0800048c                DCMI_IRQHandler
-                0x0800048c                CAN2_RX0_IRQHandler
-                0x0800048c                DMA2_Stream3_IRQHandler
-                0x0800048c                USART6_IRQHandler
-                0x0800048c                USART3_IRQHandler
-                0x0800048c                CRYP_IRQHandler
-                0x0800048c                CAN1_RX1_IRQHandler
-                0x0800048c                UART5_IRQHandler
-                0x0800048c                DMA2_Stream0_IRQHandler
-                0x0800048c                TIM4_IRQHandler
-                0x0800048c                I2C1_EV_IRQHandler
-                0x0800048c                DMA1_Stream6_IRQHandler
-                0x0800048c                DMA1_Stream1_IRQHandler
-                0x0800048c                UART4_IRQHandler
-                0x0800048c                TIM3_IRQHandler
-                0x0800048c                RCC_IRQHandler
-                0x0800048c                TIM8_BRK_TIM12_IRQHandler
-                0x0800048c                Default_Handler
-                0x0800048c                EXTI15_10_IRQHandler
-                0x0800048c                ADC_IRQHandler
-                0x0800048c                DMA1_Stream7_IRQHandler
-                0x0800048c                TIM7_IRQHandler
-                0x0800048c                CAN2_TX_IRQHandler
-                0x0800048c                TIM5_IRQHandler
-                0x0800048c                DMA2_Stream7_IRQHandler
-                0x0800048c                I2C3_EV_IRQHandler
-                0x0800048c                EXTI9_5_IRQHandler
-                0x0800048c                RTC_WKUP_IRQHandler
-                0x0800048c                ETH_WKUP_IRQHandler
-                0x0800048c                SPI2_IRQHandler
-                0x0800048c                OTG_HS_EP1_IN_IRQHandler
-                0x0800048c                MemManage_Handler
-                0x0800048c                DMA1_Stream0_IRQHandler
-                0x0800048c                CAN1_TX_IRQHandler
-                0x0800048c                SVC_Handler
-                0x0800048c                EXTI4_IRQHandler
-                0x0800048c                FSMC_IRQHandler
-                0x0800048c                ETH_IRQHandler
-                0x0800048c                OTG_HS_EP1_OUT_IRQHandler
-                0x0800048c                WWDG_IRQHandler
-                0x0800048c                TIM2_IRQHandler
-                0x0800048c                OTG_FS_WKUP_IRQHandler
-                0x0800048c                TIM1_TRG_COM_TIM11_IRQHandler
-                0x0800048c                OTG_HS_IRQHandler
-                0x0800048c                EXTI1_IRQHandler
-                0x0800048c                USART2_IRQHandler
-                0x0800048c                I2C2_ER_IRQHandler
-                0x0800048c                DMA2_Stream1_IRQHandler
-                0x0800048c                CAN1_SCE_IRQHandler
-                0x0800048c                FLASH_IRQHandler
-                0x0800048c                DMA2_Stream4_IRQHandler
-                0x0800048c                BusFault_Handler
-                0x0800048c                USART1_IRQHandler
-                0x0800048c                OTG_FS_IRQHandler
-                0x0800048c                SPI3_IRQHandler
-                0x0800048c                DMA1_Stream4_IRQHandler
-                0x0800048c                I2C1_ER_IRQHandler
-                0x0800048c                DMA2_Stream6_IRQHandler
-                0x0800048c                DMA1_Stream3_IRQHandler
- *fill*         0x0800048e        0x2 
- .text          0x08000490       0x50 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
-                0x08000490                __libc_init_array
+                0x08000494        0x2 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+                0x08000494                RTC_Alarm_IRQHandler
+                0x08000494                HASH_RNG_IRQHandler
+                0x08000494                EXTI2_IRQHandler
+                0x08000494                TIM8_CC_IRQHandler
+                0x08000494                DebugMon_Handler
+                0x08000494                TIM1_CC_IRQHandler
+                0x08000494                DMA2_Stream5_IRQHandler
+                0x08000494                HardFault_Handler
+                0x08000494                DMA1_Stream5_IRQHandler
+                0x08000494                SysTick_Handler
+                0x08000494                PVD_IRQHandler
+                0x08000494                SDIO_IRQHandler
+                0x08000494                TAMP_STAMP_IRQHandler
+                0x08000494                PendSV_Handler
+                0x08000494                NMI_Handler
+                0x08000494                CAN2_RX1_IRQHandler
+                0x08000494                EXTI3_IRQHandler
+                0x08000494                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08000494                TIM1_UP_TIM10_IRQHandler
+                0x08000494                TIM8_UP_TIM13_IRQHandler
+                0x08000494                I2C3_ER_IRQHandler
+                0x08000494                EXTI0_IRQHandler
+                0x08000494                I2C2_EV_IRQHandler
+                0x08000494                DMA1_Stream2_IRQHandler
+                0x08000494                CAN1_RX0_IRQHandler
+                0x08000494                FPU_IRQHandler
+                0x08000494                OTG_HS_WKUP_IRQHandler
+                0x08000494                UsageFault_Handler
+                0x08000494                CAN2_SCE_IRQHandler
+                0x08000494                DMA2_Stream2_IRQHandler
+                0x08000494                SPI1_IRQHandler
+                0x08000494                TIM6_DAC_IRQHandler
+                0x08000494                TIM1_BRK_TIM9_IRQHandler
+                0x08000494                DCMI_IRQHandler
+                0x08000494                CAN2_RX0_IRQHandler
+                0x08000494                DMA2_Stream3_IRQHandler
+                0x08000494                USART6_IRQHandler
+                0x08000494                USART3_IRQHandler
+                0x08000494                CRYP_IRQHandler
+                0x08000494                CAN1_RX1_IRQHandler
+                0x08000494                UART5_IRQHandler
+                0x08000494                DMA2_Stream0_IRQHandler
+                0x08000494                TIM4_IRQHandler
+                0x08000494                I2C1_EV_IRQHandler
+                0x08000494                DMA1_Stream6_IRQHandler
+                0x08000494                DMA1_Stream1_IRQHandler
+                0x08000494                UART4_IRQHandler
+                0x08000494                TIM3_IRQHandler
+                0x08000494                RCC_IRQHandler
+                0x08000494                TIM8_BRK_TIM12_IRQHandler
+                0x08000494                Default_Handler
+                0x08000494                EXTI15_10_IRQHandler
+                0x08000494                ADC_IRQHandler
+                0x08000494                DMA1_Stream7_IRQHandler
+                0x08000494                TIM7_IRQHandler
+                0x08000494                CAN2_TX_IRQHandler
+                0x08000494                TIM5_IRQHandler
+                0x08000494                DMA2_Stream7_IRQHandler
+                0x08000494                I2C3_EV_IRQHandler
+                0x08000494                EXTI9_5_IRQHandler
+                0x08000494                RTC_WKUP_IRQHandler
+                0x08000494                ETH_WKUP_IRQHandler
+                0x08000494                SPI2_IRQHandler
+                0x08000494                OTG_HS_EP1_IN_IRQHandler
+                0x08000494                MemManage_Handler
+                0x08000494                DMA1_Stream0_IRQHandler
+                0x08000494                CAN1_TX_IRQHandler
+                0x08000494                SVC_Handler
+                0x08000494                EXTI4_IRQHandler
+                0x08000494                FSMC_IRQHandler
+                0x08000494                ETH_IRQHandler
+                0x08000494                OTG_HS_EP1_OUT_IRQHandler
+                0x08000494                WWDG_IRQHandler
+                0x08000494                TIM2_IRQHandler
+                0x08000494                OTG_FS_WKUP_IRQHandler
+                0x08000494                TIM1_TRG_COM_TIM11_IRQHandler
+                0x08000494                OTG_HS_IRQHandler
+                0x08000494                EXTI1_IRQHandler
+                0x08000494                USART2_IRQHandler
+                0x08000494                I2C2_ER_IRQHandler
+                0x08000494                DMA2_Stream1_IRQHandler
+                0x08000494                CAN1_SCE_IRQHandler
+                0x08000494                FLASH_IRQHandler
+                0x08000494                DMA2_Stream4_IRQHandler
+                0x08000494                BusFault_Handler
+                0x08000494                USART1_IRQHandler
+                0x08000494                OTG_FS_IRQHandler
+                0x08000494                SPI3_IRQHandler
+                0x08000494                DMA1_Stream4_IRQHandler
+                0x08000494                I2C1_ER_IRQHandler
+                0x08000494                DMA2_Stream6_IRQHandler
+                0x08000494                DMA1_Stream3_IRQHandler
+ *fill*         0x08000496        0x2 
+ .text          0x08000498       0x50 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+                0x08000498                __libc_init_array
  *(.init)
- .init          0x080004e0        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
-                0x080004e0                _init
- .init          0x080004e4        0x8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x080004e8        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
+                0x080004e8                _init
+ .init          0x080004ec        0x8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x080004ec        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
-                0x080004ec                _fini
- .fini          0x080004f0        0x8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
+ .fini          0x080004f4        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
+                0x080004f4                _fini
+ .fini          0x080004f8        0x8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -730,38 +732,38 @@ LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/c
  *(.dtors)
  *(.rodata*)
  *(.eh_frame*)
- .eh_frame      0x080004f8        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
- .eh_frame      0x080004f8        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtend.o
+ .eh_frame      0x08000500        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08000500        0x4 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtend.o
 
-.glue_7         0x080004fc        0x0
- .glue_7        0x080004fc        0x0 linker stubs
+.glue_7         0x08000504        0x0
+ .glue_7        0x08000504        0x0 linker stubs
 
-.glue_7t        0x080004fc        0x0
- .glue_7t       0x080004fc        0x0 linker stubs
+.glue_7t        0x08000504        0x0
+ .glue_7t       0x08000504        0x0 linker stubs
 
-.vfp11_veneer   0x080004fc        0x0
- .vfp11_veneer  0x080004fc        0x0 linker stubs
+.vfp11_veneer   0x08000504        0x0
+ .vfp11_veneer  0x08000504        0x0 linker stubs
 
-.v4_bx          0x080004fc        0x0
- .v4_bx         0x080004fc        0x0 linker stubs
+.v4_bx          0x08000504        0x0
+ .v4_bx         0x08000504        0x0 linker stubs
 
-.iplt           0x080004fc        0x0
- .iplt          0x080004fc        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08000504        0x0
+ .iplt          0x08000504        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rel.dyn        0x080004fc        0x0
- .rel.iplt      0x080004fc        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08000504        0x0
+ .rel.iplt      0x08000504        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x080004fc                        __exidx_start = .
+                0x08000504                        __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x080004fc                        __exidx_end = .
-                0x080004fc                        __etext = .
-                0x080004fc                        _sidata = LOADADDR (.data)
+                0x08000504                        __exidx_end = .
+                0x08000504                        __etext = .
+                0x08000504                        _sidata = LOADADDR (.data)
 
-.data           0x20000000        0x8 load address 0x080004fc
+.data           0x20000000        0x8 load address 0x08000504
                 0x20000000                        _sdata = .
  *(vtable)
  *(.data*)
@@ -784,12 +786,12 @@ LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/c
  *(.jcr*)
                 0x20000008                        . = ALIGN (0x4)
                 0x20000008                        _edata = .
-                0x080004fc                        _siccmram = LOADADDR (.ccmram)
+                0x08000504                        _siccmram = LOADADDR (.ccmram)
 
-.igot.plt       0x20000008        0x0 load address 0x08000504
+.igot.plt       0x20000008        0x0 load address 0x0800050c
  .igot.plt      0x20000008        0x0 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
-.ccmram         0x10000000        0x0 load address 0x080004fc
+.ccmram         0x10000000        0x0 load address 0x08000504
                 0x10000000                        . = ALIGN (0x4)
                 0x10000000                        _sccmram = .
  *(.ccmram)
@@ -797,7 +799,7 @@ LOAD C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/c
                 0x10000000                        . = ALIGN (0x4)
                 0x10000000                        _eccmram = .
 
-.bss            0x20000008       0x1c load address 0x08000504
+.bss            0x20000008       0x1c load address 0x0800050c
                 0x20000008                        . = ALIGN (0x4)
                 0x20000008                        _sbss = .
                 0x20000008                        __bss_start__ = _sbss
@@ -851,11 +853,11 @@ LOAD linker stubs
  .comment       0x00000024       0x13 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
  .comment       0x00000024       0x13 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_info     0x00000000      0xde2
- .debug_info    0x00000000      0x59b CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_info    0x0000059b      0x70c CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_info    0x00000ca7       0x30 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_info    0x00000cd7      0x10b C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_info     0x00000000      0xddd
+ .debug_info    0x00000000      0x596 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_info    0x00000596      0x70c CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_info    0x00000ca2       0x30 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_info    0x00000cd2      0x10b C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
 .debug_abbrev   0x00000000      0x505
  .debug_abbrev  0x00000000      0x281 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
@@ -863,9 +865,9 @@ LOAD linker stubs
  .debug_abbrev  0x00000418       0x24 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
  .debug_abbrev  0x0000043c       0xc9 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_loc      0x00000000      0x637
- .debug_loc     0x00000000      0x4fa CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_loc     0x000004fa      0x13d CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+.debug_loc      0x00000000      0x628
+ .debug_loc     0x00000000      0x4eb CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_loc     0x000004eb      0x13d CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
 
 .debug_aranges  0x00000000       0xd8
  .debug_aranges
@@ -925,18 +927,18 @@ LOAD linker stubs
  .debug_macro   0x0000ee97      0x279 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
  .debug_macro   0x0000f110       0x35 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
 
-.debug_line     0x00000000      0xd48
- .debug_line    0x00000000      0x4a7 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_line    0x000004a7      0x6e7 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_line    0x00000b8e       0x76 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_line    0x00000c04      0x144 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_line     0x00000000      0xd45
+ .debug_line    0x00000000      0x4a4 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_line    0x000004a4      0x6e7 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_line    0x00000b8b       0x76 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_line    0x00000c01      0x144 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_str      0x00000000    0x607bb
- .debug_str     0x00000000    0x607bb CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                               0x40fe (size before relaxing)
- .debug_str     0x000607bb    0x604bb CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_str     0x000607bb       0xa1 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_str     0x000607bb      0x1e8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_str      0x00000000    0x607a6
+ .debug_str     0x00000000    0x607a6 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                               0x40e9 (size before relaxing)
+ .debug_str     0x000607a6    0x604bb CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_str     0x000607a6       0xa1 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_str     0x000607a6      0x1e8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
 .debug_frame    0x00000000      0x140
  .debug_frame   0x00000000       0xdc CMakeFiles/STM32F4Template.elf.dir/main.c.obj

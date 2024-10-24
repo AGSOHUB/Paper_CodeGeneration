@@ -3,6 +3,101 @@ import re
 import difflib
 import matplotlib.pyplot as plt
 import numpy as np
+from dotenv import load_dotenv
+import os
+import subprocess
+import csv
+
+def run_build_bat():
+    """
+    Runs the build.bat file from the correct working directory using MSYS2 shell.
+    """
+    # Save the initial working directory
+    initial_directory = os.getcwd()
+
+    # Relative path to the 'compile_project' directory
+    build_directory = os.path.join(initial_directory, 'compile_project')
+
+    # Path to the batch file (build.bat) within the relative directory
+    build_bat = os.path.join(build_directory, 'build.bat')
+
+    try:
+        # Change the current working directory to the relative 'compile_project' directory
+        os.chdir(build_directory)
+
+        # Execute the batch file using subprocess
+        process = subprocess.Popen([build_bat], shell=True)
+        
+        # Wait for the batch process to complete
+        process.wait()
+
+    finally:
+        # After the process is done, navigate back to the initial directory
+        os.chdir(initial_directory)
+
+
+
+def run_renode_script():
+    """
+    Runs the Renode script to execute the simulation and generate the CSV file.
+    """
+    renode_script_path = r'C:\msys64\Paper_CodeGeneration\run_simulation_script.resc'
+    
+    # Write the Renode script to a file
+    renode_script_content = """
+    mach create
+    machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
+    sysbus LoadELF "C:/msys64/Paper_CodeGeneration/compile_project/build/src/STM32F4Template.elf"
+    
+    # Set log level to capture messages for USART2
+    logLevel -1 sysbus.usart2
+    
+    # Record USART2 output directly to a CSV file
+    sysbus.usart2 CreateFileBackend @C:/msys64/Paper_CodeGeneration/results/simulation_test.csv
+    showAnalyzer sysbus.usart2
+    start
+    
+    # Pause for 5 seconds to let the simulation run before quitting
+    sleep 5
+    
+    # Close Renode after the simulation
+    quit
+    """
+    
+    with open(renode_script_path, 'w') as renode_file:
+        renode_file.write(renode_script_content)
+
+    # Now run the Renode CLI with the script
+    try:
+        subprocess.run(["renode", renode_script_path], check=True)
+        print("Renode script executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to execute Renode script: {e}")
+
+
+def read_and_clear_csv(file_path):
+    """
+    Reads a number from the given CSV file and erases its content.
+    Assumes the number is stored in the first cell of the CSV.
+    """
+    number = None
+    # Read the number from the CSV
+    with open(file_path, 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            if row:  # If the row contains data
+                number = row[0]
+                break
+
+    # Erase the content of the file
+    with open(file_path, 'w') as csvfile:
+        csvfile.write("")
+
+    return number
+
+load_dotenv()  # Load environment variables from .env file
+
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Tokenization function to split code into tokens for similarity calculation
 def tokenize(line):
@@ -66,14 +161,14 @@ def calculate_code_similarity(code1, code2):
     return similarity_percentage
 
 # Function to read JSON file and calculate similarity across iterations
-def calculate_similarity_over_iterations(json_file):
-    with open(json_file, 'r') as f:
-        data = json.load(f)['test_data_3_2']
+def calculate_similarity_over_iterations(test_version):
+    with open(f'results/{test_version}.json', 'r') as f:
+        data = json.load(f)[test_version]
 
     similarities = []
     
     for i in range(1, len(data)):
-        code1 = data[i-1]["Code"]
+        code1 = data[1]["Code"]
         code2 = data[i]["Code"]
         similarity = calculate_code_similarity(code1, code2)
         similarities.append(similarity)
@@ -81,9 +176,9 @@ def calculate_similarity_over_iterations(json_file):
     return similarities
 
 
-def run_similarity(path = 'results/test_data_3_2.json'):
+def run_similarity(test_version):
     # Example usage: Replace 'test_data.json' with your actual JSON file path
-    similarities = calculate_similarity_over_iterations(path)
+    similarities = calculate_similarity_over_iterations(test_version)
 
     # Generate plot
     iterations = list(range(1, len(similarities) + 1))
