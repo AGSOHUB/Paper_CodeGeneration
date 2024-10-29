@@ -1,6 +1,6 @@
-set(CMAKE_HOST_SYSTEM "Windows-6.2.9200")
+set(CMAKE_HOST_SYSTEM "Windows-10.0.22631")
 set(CMAKE_HOST_SYSTEM_NAME "Windows")
-set(CMAKE_HOST_SYSTEM_VERSION "6.2.9200")
+set(CMAKE_HOST_SYSTEM_VERSION "10.0.22631")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "AMD64")
 
 include("C:/msys64/Paper_CodeGeneration/compile_project/CMake/GNU-ARM-Toolchain.cmake")

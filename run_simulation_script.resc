@@ -1,19 +1,19 @@
 
     mach create
     machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
-    sysbus LoadELF "C:/msys64/Paper_CodeGeneration/compile_project/build/src/STM32F4Template.elf"
-    
+    sysbus LoadELF "C:\msys64\Paper_CodeGeneration\compile_project/build/src/STM32F4Template.elf"
+
     # Set log level to capture messages for USART2
     logLevel -1 sysbus.usart2
-    
+
     # Record USART2 output directly to a CSV file
-    sysbus.usart2 CreateFileBackend @C:/msys64/Paper_CodeGeneration/results/simulation_test.csv
+    sysbus.usart2 CreateFileBackend @C:\msys64\Paper_CodeGeneration\results/simulation_test.csv
     showAnalyzer sysbus.usart2
     start
-    
+
     # Pause for 5 seconds to let the simulation run before quitting
     sleep 5
-    
+
     # Close Renode after the simulation
     quit
     

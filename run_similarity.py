@@ -41,38 +41,41 @@ def run_renode_script():
     """
     Runs the Renode script to execute the simulation and generate the CSV file.
     """
-    renode_script_path = r'C:\msys64\Paper_CodeGeneration\run_simulation_script.resc'
     
-    # Write the Renode script to a file
-    renode_script_content = """
+    # Assuming the current working directory is Paper_Codegeneration
+    current_dir = os.getcwd()  # Get the current directory (Paper_CodeGeneration)
+
+    # Define relative paths based on the current directory
+    renode_script_path = os.path.join(current_dir, 'run_simulation_script.resc')
+    elf_file_path = os.path.join(current_dir, 'compile_project/build/src/STM32F4Template.elf')
+    csv_output_path = os.path.join(current_dir, 'results/simulation_test.csv')
+
+    # Write the Renode script to a file with relative paths
+    renode_script_content = f"""
     mach create
     machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
-    sysbus LoadELF "C:/msys64/Paper_CodeGeneration/compile_project/build/src/STM32F4Template.elf"
-    
+    sysbus LoadELF "{elf_file_path}"
+
     # Set log level to capture messages for USART2
     logLevel -1 sysbus.usart2
-    
+
     # Record USART2 output directly to a CSV file
-    sysbus.usart2 CreateFileBackend @C:/msys64/Paper_CodeGeneration/results/simulation_test.csv
+    sysbus.usart2 CreateFileBackend @{csv_output_path}
     showAnalyzer sysbus.usart2
     start
-    
+
     # Pause for 5 seconds to let the simulation run before quitting
     sleep 5
-    
+
     # Close Renode after the simulation
     quit
     """
-    
-    with open(renode_script_path, 'w') as renode_file:
-        renode_file.write(renode_script_content)
 
-    # Now run the Renode CLI with the script
-    try:
-        subprocess.run(["renode", renode_script_path], check=True)
-        print("Renode script executed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to execute Renode script: {e}")
+    # Write the content to the Renode script file
+    with open(renode_script_path, 'w') as file:
+        file.write(renode_script_content)
+
+    print(f"Renode script written to {renode_script_path}")
 
 
 def read_and_clear_csv(file_path):
