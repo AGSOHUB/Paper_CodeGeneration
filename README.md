@@ -19,3 +19,24 @@ pacman -S mingw-w64-x86_64-arm-none-eabi-gcc
 pacman -S make
 pacman -S mingw-w64-x86_64-cmake
 ```
+
+### Step 3: Install Python Dependencies
+Ensure you have Python installed, then run the following command to install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Install Renode
+1. Download the [Renode .MSI installer](https://renode.io/download) and install Renode on your system.
+2. Add the Renode installation directory to your system PATH.
+
+### Step 5: Configure OpenAI Key
+Add your OpenAI API key to a `.env` file in the project root directory:
+
+### Step 5: Configure OpenAI Key
+Add your OpenAI API key to a `.env` file in the project root directory:
+
+```bash
+OPENAI_API_KEY=your_openai_key
+```
