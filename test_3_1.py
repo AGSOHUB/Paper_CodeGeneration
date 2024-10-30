@@ -14,7 +14,7 @@ from implementation.helper_functions.rag import process_c_files
 from dotenv import load_dotenv
 import os
 from interface_3 import concatenate_file
-from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_clear_csv
+from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_delete_csv
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -145,30 +145,30 @@ def tokenize(line):
     # Tokenisierung anhand von Wortgrenzen und Zeichenfolgen
     return re.findall(r'\b\w+\b', line)
 
-def calculate_code_similarity(file1, file2):
-    with open(file1, 'r') as f1, open(file2, 'r') as f2:
-        file1_lines = f1.readlines()
-        file2_lines = f2.readlines()
+def calculate_code_similarity(code1, code2):
+    # Tokenize and calculate similarity between two strings of code
+    code1_lines = code1.splitlines()
+    code2_lines = code2.splitlines()
 
     total_tokens = 0
     matching_tokens = 0
 
-    file1_lines_set = set(file1_lines)
-    file2_lines_set = set(file2_lines)
+    code1_lines_set = set(code1_lines)
+    code2_lines_set = set(code2_lines)
     
-    exact_matches = file1_lines_set & file2_lines_set
+    exact_matches = code1_lines_set & code2_lines_set
     
     for line in exact_matches:
         tokens = tokenize(line)
         total_tokens += len(tokens)
         matching_tokens += len(tokens)
     
-    file1_lines = [line for line in file1_lines if line not in exact_matches]
-    file2_lines = [line for line in file2_lines if line not in exact_matches]
+    code1_lines = [line for line in code1_lines if line not in exact_matches]
+    code2_lines = [line for line in code2_lines if line not in exact_matches]
     
-    for line in file1_lines:
+    for line in code1_lines:
         tokens_line1 = tokenize(line)
-        best_match = difflib.get_close_matches(line, file2_lines, n=1, cutoff=0.1)
+        best_match = difflib.get_close_matches(line, code2_lines, n=1, cutoff=0.1)
         
         if best_match:
             tokens_line2 = tokenize(best_match[0])
@@ -179,9 +179,9 @@ def calculate_code_similarity(file1, file2):
                 matching_tokens += match.size
 
             total_tokens += max(len(tokens_line1), len(tokens_line2))
-            file2_lines.remove(best_match[0])
+            code2_lines.remove(best_match[0])
 
-    for line in file1_lines + file2_lines:
+    for line in code1_lines + code2_lines:
         tokens = tokenize(line)
         total_tokens += len(tokens)
 
@@ -189,100 +189,68 @@ def calculate_code_similarity(file1, file2):
 
     return similarity_percentage
 
-def save_plot(x, y, xlabel, ylabel, title, filename, plot_type="line"):
-    plt.figure()
-    if plot_type == "line":
-        plt.plot(x, y, marker='o')
-    elif plot_type == "bar":
-        plt.bar(x, y)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.title(title)
-    plt.grid(True)
-    plt.savefig(filename)
-    plt.close()
-
 def run_iterations_with_random_removal(num_iterations):
     """
     Runs the iteration process with random element removal and logs the results in JSON format.
-    Includes build and Renode simulation steps for each iteration.
     """
     json_file_path = 'results/test_data_3_1.json'
     csv_file_path = 'results/simulation_test.csv'
 
-    # Check if the JSON file exists, if not create it with initial structure
+    # Load or initialize the JSON data structure
     if os.path.exists(json_file_path):
         with open(json_file_path, 'r') as json_file:
             test_data = json.load(json_file)
     else:
         test_data = {"test_data_3_1": []}
 
-    previous_file_path = None
-    original_concatenated_file_path = None
-
     for i in range(num_iterations):
         process_c_files(r"compile_project\src")
         state = {'iteration': i + 1, 'api_requests': 0, 'total_time': 0.0}
 
         elements = get_all_elements_from_codebase()
-
         source_code_path = r'compile_project\src\microcontroller_hal.h'
         removed_element = remove_random_element(elements, source_code_path)
 
         start_time = time.time()
-        fixed_code = fix_c_code(source_code_path)
+        fix_c_code(source_code_path)
         elapsed_time = time.time() - start_time
-        concatenated_file_path = f'output/concatenated_code_iteration_{i+1}.c'
-        concatenate_files(concatenated_file_path)
-
         state['total_time'] = elapsed_time
         compilation_success = compile_code(r'compile_project\src\main.c')
 
-        # If this is the first iteration, save the concatenated file path as the original reference
-        if i == 0:
-            original_concatenated_file_path = concatenated_file_path
+        # Retrieve previous and original "Code" for similarity calculation
+        previous_code = test_data["test_data_3_1"][-1]["Code"] if test_data["test_data_3_1"] else ""
+        original_code = test_data["test_data_3_1"][0]["Code"] if test_data["test_data_3_1"] else ""
 
-        variance_with_previous = 0.0
-        variance_with_original = 0.0
-        if previous_file_path:
-            variance_with_previous = calculate_code_similarity(previous_file_path, concatenated_file_path)
-        variance_with_original = calculate_code_similarity(original_concatenated_file_path, concatenated_file_path)
+        current_code = concatenate_file()
+        variance_with_previous = calculate_code_similarity(previous_code, current_code) if previous_code else 0.0
+        variance_with_original = calculate_code_similarity(original_code, current_code) if original_code else 0.0
 
-        # Run the build.bat file
+        # Run the build.bat file and Renode simulation
         run_build_bat()
-
-        # Run the Renode simulation
         run_renode_script()
 
         # Read the Functioning code binary from the CSV and clear the file
-        functioning_code_binary = read_and_clear_csv(csv_file_path)
-
-        # Create a unique ID and timestamp for the new entry
-        unique_id = str(uuid.uuid4())
-        timestamp = datetime.now().isoformat()
+        functioning_code_binary = read_and_delete_csv(csv_file_path)
 
         # Prepare the new entry
         new_entry = {
-            "unique_id": unique_id,
-            "timestamp": timestamp,
+            "unique_id": str(uuid.uuid4()),
+            "timestamp": datetime.now().isoformat(),
             "total time (seconds)": state['total_time'],
             "compilation-success": compilation_success,
             "Similarity with Previous": variance_with_previous,
             "Similarity with Original": variance_with_original,
             "Removed Element": removed_element if removed_element else "None",
             "Functioning code Binary": functioning_code_binary,
-            "Code": concatenate_file(),
+            "Code": current_code,
         }
 
         # Append the new entry to the test data
         test_data["test_data_3_1"].append(new_entry)
 
-        # Save the new entry to the JSON file
+        # Save the updated JSON data
         with open(json_file_path, 'w') as json_file:
             json.dump(test_data, json_file, indent=4)
-
-        # Save the current concatenated file as the previous file for the next iteration
-        previous_file_path = concatenated_file_path
 
         print(f"Test Iteration {i + 1} finished. Results saved to {json_file_path}.")
 
@@ -290,6 +258,7 @@ def run_iterations_with_random_removal(num_iterations):
 
 
 
+run_similarity('test_data_3_1')
 # reset everything to ensure working code
 clear_all_files()
 process_c_files(r"compile_project\src")
@@ -299,7 +268,5 @@ include_directories = [r'\compile_project\include']
 fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process with random element removal 100 times
-run_iterations_with_random_removal(15)
+run_iterations_with_random_removal(1)
 
-
-run_similarity('test_data_3_1')

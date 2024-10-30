@@ -71,16 +71,21 @@ def run_renode_script():
     quit
     """
 
-    # Write the content to the Renode script file
-    with open(renode_script_path, 'w') as file:
-        file.write(renode_script_content)
+    with open(renode_script_path, 'w') as renode_file:
+        renode_file.write(renode_script_content)
 
-    print(f"Renode script written to {renode_script_path}")
+    # Now run the Renode CLI with the script
+    try:
+        subprocess.run(["renode", renode_script_path], check=True)
+        print("Renode script executed successfully.")
+
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to execute Renode script: {e}")
 
 
-def read_and_clear_csv(file_path):
+def read_and_delete_csv(file_path):
     """
-    Reads a number from the given CSV file and erases its content.
+    Reads a number from the given CSV file and deletes the file.
     Assumes the number is stored in the first cell of the CSV.
     """
     number = None
@@ -92,12 +97,10 @@ def read_and_clear_csv(file_path):
                 number = row[0]
                 break
 
-    # Erase the content of the file
-    with open(file_path, 'w') as csvfile:
-        csvfile.write("")
+    # Delete the file
+    os.remove(file_path)
 
     return number
-
 load_dotenv()  # Load environment variables from .env file
 
 api_key = os.getenv("OPENAI_API_KEY")

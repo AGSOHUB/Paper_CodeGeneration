@@ -1,6 +1,5 @@
 import re
 import os
-import time
 import subprocess
 
 import shutil
@@ -34,12 +33,6 @@ def concatenate_files(output_file):
 
     return output_file
 
-def log_to_file(message):
-    """
-    Writes a log message to the output/generation_log.txt file.
-    """
-    with open('output/generation_log.txt', 'a') as log_file:
-        log_file.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {message}\n")
 
 def extract_includes(source_code):
     """
@@ -55,7 +48,6 @@ def read_file(file_path):
         with open(file_path, 'r') as file:
             return file.read()
     except (PermissionError, FileNotFoundError) as e:
-        log_to_file(f"Error reading file {file_path}: {e}")
         return None
 
 def scan_directory_for_headers(directory):
@@ -76,7 +68,6 @@ def insert_generated_code(func_code, file_path):
     cleaned_code = re.sub(r'```c?', '', func_code)
     with open(file_path, 'a') as file:
         file.write(f"\n{cleaned_code}\n")
-    log_to_file(f"Inserted code into {file_path}")
 
 def compile_code(file_path):
     """
@@ -98,7 +89,7 @@ def clear_all_files():
     """
     Clears the content of all specified files and writes initial content to them.
     """
-    open('output/generation_log.txt', 'w').close()
+
     file_paths = [
         "compile_project/src/variables.h",
         "compile_project/src/microcontroller_hal.h",

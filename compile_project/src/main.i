@@ -19,33 +19,19 @@ typedef unsigned long long uint64_t;
 # 3 "compile_project\\src\\microcontroller_hal.h" 2
 # 1 "compile_project\\src\\variables.h" 1
 # 4 "compile_project\\src\\microcontroller_hal.h" 2
-# 14 "compile_project\\src\\microcontroller_hal.h"
-void ENABLE_GPIOA_CLOCK(void) {
+# 20 "compile_project\\src\\microcontroller_hal.h"
+void hardware_abstraction_layer_function_gpio_toggle_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
 
-    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(1073887232 + 48);
+    volatile uint32_t *ODR = (uint32_t *)(gpio_port_base + 20);
 
-    *RCC_AHB1ENR |= (1 << 0);
-}
-
-
-
-
-
-
-void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) {
-
-    uint8_t pin_position = 0;
-    for (uint32_t mask = pin_mask; mask > 1; mask >>= 1) {
+    uint32_t pin_position = 0;
+    while ((pin_mask >> pin_position) != 1) {
         pin_position++;
     }
 
-    volatile uint32_t *GPIO_MODER = (uint32_t *)(gpio_base + 0);
-
-    *GPIO_MODER &= ~(3 << (pin_position * 2));
-
-    *GPIO_MODER |= (mode & 1) << (pin_position * 2);
+    *ODR ^= (1 << pin_position);
 }
-# 49 "compile_project\\src\\microcontroller_hal.h"
+# 43 "compile_project\\src\\microcontroller_hal.h"
 void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base, uint32_t pin_mask, uint32_t value) {
 
     volatile uint32_t *ODR = (uint32_t *)(gpio_port_base + 20);
@@ -63,17 +49,24 @@ void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base,
         *ODR &= ~(1 << pin_position);
     }
 }
-# 76 "compile_project\\src\\microcontroller_hal.h"
+# 68 "compile_project\\src\\microcontroller_hal.h"
+void ENABLE_GPIOA_CLOCK(void) {
+
+    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(1073887232 + 48);
+
+    *RCC_AHB1ENR |= (1 << 0);
+}
+# 85 "compile_project\\src\\microcontroller_hal.h"
 int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
 
-    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 16);
+    volatile uint32_t *IDR = (uint32_t *)(gpio_port_base + 16);
 
     uint32_t pin_position = 0;
     while ((pin_mask >> pin_position) != 1) {
         pin_position++;
     }
 
-    return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
+    return ((*IDR & (1 << pin_position)) != 0) ? 1 : 0;
 }
 # 2 "compile_project\\src\\main.c" 2
 

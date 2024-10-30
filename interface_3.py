@@ -1,6 +1,5 @@
-import streamlit as st
+
 from implementation.hypothesis_3_2 import generation_cycle
-from implementation.helper_functions.file_windows import show_file_windows, reload_content_general
 from dotenv import load_dotenv
 import os
 
@@ -9,11 +8,6 @@ load_dotenv()  # Load environment variables from .env file
 api_key = os.getenv("OPENAI_API_KEY")
 
 
-
-if 'conversation' not in st.session_state:
-    st.session_state.conversation = []
-if 'code_generated' not in st.session_state:
-    st.session_state.code_generated = ""
 
 
 
@@ -70,51 +64,3 @@ def concatenate_file():
 
     return concatenated_content
 
-def overwrite_file(source_path, target_path):
-    """Function to read content from the source path and overwrite the target file."""
-    try:
-        with open(source_path, 'r') as source_file:
-            content = source_file.read()
-
-        with open(target_path, 'w') as target_file:
-            target_file.write(content)
-
-        st.success(f"Content from {source_path} has been successfully overwritten to {target_path}.")
-    except FileNotFoundError:
-        st.error("Source file not found.")
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
-
-    st.rerun()
-
-def run_parallel_interface():
-    if 'reload_done' not in st.session_state:
-        st.session_state.reload_done = False
-    if st.session_state.reload_done != True:
-        reload_content_general()
-
-
-
-    show_file_windows()
-
-    generation_cycle()
-
-
-#   output_file = 'microcontroller_hal.h'
-#   concatenated_file = concatenate_files(output_file)
-#   with open(concatenated_file, 'rb') as f:
-#        st.download_button('Download microcontroller_hal.h', f, file_name=output_file)
-    # Button to overwrite the Hardware Abstraction Layer file
-    if st.button("Overwrite Hardware Abstraction Layer"):
-        target_path = r"compile_project/src/microcontroller_hal.h"
-        try:
-            concatenate_files(target_path)
-            st.success(f"The file {target_path} has been successfully overwritten with concatenated content.")
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-    for message_html in reversed(st.session_state.conversation):
-        st.markdown(message_html, unsafe_allow_html=True)
-
-
-
-run_parallel_interface()

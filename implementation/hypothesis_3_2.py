@@ -1,18 +1,11 @@
 import re
 import os
 import time
-import streamlit as st
 import base64
 from implementation.helper_functions.rag import process_c_files, generate_c_function, generate_c_variable, generate_c_typedef
 from implementation.helper_functions.removed_unused_or_duplicated import find_and_remove_duplicates
 from implementation.helper_functions.find_missing import find_missing
 
-def log_to_file(message):
-    """
-    Writes a log message to the output/generation_log.txt file.
-    """
-    with open('output/generation_log.txt', 'a') as log_file:
-        log_file.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {message}\n")
 
 def extract_includes(source_code):
     """
@@ -28,7 +21,6 @@ def read_file(file_path):
         with open(file_path, 'r') as file:
             return file.read()
     except (PermissionError, FileNotFoundError) as e:
-        log_to_file(f"Error reading file {file_path}: {e}")
         return None
 
 def scan_directory_for_headers(directory):
@@ -50,16 +42,12 @@ def fix_c_code(file_path):
 
     missing_functions, missing_variables, missing_typedefs = find_missing()
     if not missing_functions and not missing_variables and not missing_typedefs:
-#        log_to_file(f"Iteration {st.session_state.iteration}: No missing functions, variables, or typedefs detected.")
         print("nothing missing")
-
-#    log_to_file(f"Iteration {st.session_state.iteration}: Found {len(missing_functions)} missing functions, {len(missing_variables)} missing variables, and {len(missing_typedefs)} missing typedefs.")
 
     # Generate and insert code for each unique missing function
     processed_functions = set()
     for index, (func_name, params) in enumerate(missing_functions):
         if func_name not in processed_functions:
-            log_to_file(f"Generating function: {func_name} with parameters {params}")
             print(f"Generating code for function {index + 1}/{len(missing_functions)}: {func_name}")
 #            st.session_state.api_requests += 1
             func_code = generate_c_function(func_name, params)
@@ -71,7 +59,6 @@ def fix_c_code(file_path):
     processed_variables = set()
     for index, var_name in enumerate(missing_variables):
         if var_name not in processed_variables:
-            log_to_file(f"Generating variable: {var_name}")
             print(f"Generating code for variable {index + 1}/{len(missing_variables)}: {var_name}")
 #            st.session_state.api_requests += 1
             var_code = generate_c_variable(var_name)
@@ -83,7 +70,6 @@ def fix_c_code(file_path):
     processed_typedefs = set()
     for index, typedef_name in enumerate(missing_typedefs):
         if typedef_name not in processed_typedefs:
-            log_to_file(f"Generating typedef: {typedef_name}")
             print(f"Generating code for typedef {index + 1}/{len(missing_typedefs)}: {typedef_name}")
 #            st.session_state.api_requests += 1
             typedef_code = generate_c_typedef(typedef_name)
@@ -145,9 +131,6 @@ def insert_generated_code(func_code, file_path):
     with open(file_path, 'a') as file:
         file.write(f"\n{cleaned_code}\n")
 
-    # Log the action
-    log_to_file(f"Inserted code into {file_path}")
-
 
 
 
@@ -190,11 +173,6 @@ def get_image_base64(path):
         encoded = base64.b64encode(image_file.read()).decode()
     return f"data:image/jpg;base64,{encoded}"
 
-def display_logs():
-    """Utility function to display logs from the generation log file."""
-    with open('output/generation_log.txt', 'r') as log_file:
-        log_data = log_file.read()
-    return log_data
 
 def generation_cycle():
     if 'iteration' not in st.session_state:

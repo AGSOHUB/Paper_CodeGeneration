@@ -8,7 +8,7 @@ import time
 import json
 import uuid
 from datetime import datetime
-from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_clear_csv
+from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_delete_csv
 
 
 load_dotenv()  # Load environment variables from .env file
@@ -68,7 +68,7 @@ def run_iterations_without_interface(num_iterations):
         run_renode_script()
 
         # Read the Functioning code binary from the CSV and clear the file
-        functioning_code_binary = read_and_clear_csv(csv_file_path)
+        functioning_code_binary = read_and_delete_csv(csv_file_path)
 
 
         # Prepare the new entry
