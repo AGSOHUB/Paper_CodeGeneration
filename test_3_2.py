@@ -103,6 +103,6 @@ source_code_path = r'compile_project\src\main.c'
 fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process 10 times
-run_iterations_without_interface(1)
+run_iterations_without_interface(100)
 
 run_similarity('test_data_3_2')
