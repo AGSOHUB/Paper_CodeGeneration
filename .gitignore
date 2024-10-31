@@ -34,3 +34,6 @@ __pycache__/
 # Push only requirements.txt
 !requirements.txt
 !CMakeLists.txt
+
+# Ignore the build directory in compile_project
+compile_project/build/
