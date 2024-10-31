@@ -168,8 +168,17 @@ def calculate_code_similarity(code1, code2):
 
 # Function to read JSON file and calculate similarity across iterations
 def calculate_similarity_over_iterations(test_version):
-    with open(f'results/{test_version}.json', 'r') as f:
-        data = json.load(f)[test_version]
+    file_path = f'results/{test_version}.json'
+    
+    # Check if file exists; if not, create an empty JSON structure
+    if not os.path.exists(file_path):
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w') as f:
+            json.dump({test_version: []}, f)  # Initialize as an empty list or structure as needed
+    
+    # Read the JSON file
+    with open(file_path, 'r') as f:
+        data = json.load(f).get(test_version, [])
 
     similarities = []
     

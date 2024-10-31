@@ -257,8 +257,6 @@ def run_iterations_with_random_removal(num_iterations):
     print(f"Completed {num_iterations} iterations.")
 
 
-
-run_similarity('test_data_3_1')
 # reset everything to ensure working code
 clear_all_files()
 process_c_files(r"compile_project\src")
@@ -270,3 +268,5 @@ fixed_code = fix_c_code(source_code_path)
 # Run the iteration process with random element removal 100 times
 run_iterations_with_random_removal(1)
 
+
+run_similarity('test_data_3_1')
