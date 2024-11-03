@@ -8,7 +8,7 @@ import time
 import json
 import uuid
 from datetime import datetime
-from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_delete_csv
+from run_similarity import run_similarity_1, run_build_bat, run_renode_script, read_and_delete_csv
 
 
 load_dotenv()  # Load environment variables from .env file
@@ -95,6 +95,9 @@ def run_iterations_without_interface(num_iterations):
 
     print(f"Completed {num_iterations} iterations. Results saved to {json_file_path}.")
 
+
+run_similarity_1('test_data_3_2')
+
 # reset everything to ensure working code
 clear_all_files()
 process_c_files(r"compile_project\src")
@@ -103,6 +106,4 @@ source_code_path = r'compile_project\src\main.c'
 fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process 10 times
-run_iterations_without_interface(100)
-
-run_similarity('test_data_3_2')
+run_iterations_without_interface(0)

@@ -14,7 +14,7 @@ from implementation.helper_functions.rag import process_c_files
 from dotenv import load_dotenv
 import os
 from interface_3 import concatenate_file
-from run_similarity import run_similarity, run_build_bat, run_renode_script, read_and_delete_csv
+from run_similarity import run_similarity_1, run_build_bat, run_renode_script, read_and_delete_csv
 
 load_dotenv()  # Load environment variables from .env file
 
@@ -257,6 +257,9 @@ def run_iterations_with_random_removal(num_iterations):
     print(f"Completed {num_iterations} iterations.")
 
 
+
+run_similarity_1('test_data_3_1')
+
 # reset everything to ensure working code
 clear_all_files()
 process_c_files(r"compile_project\src")
@@ -266,7 +269,5 @@ include_directories = [r'\compile_project\include']
 fixed_code = fix_c_code(source_code_path)
 
 # Run the iteration process with random element removal 100 times
-run_iterations_with_random_removal(1)
+run_iterations_with_random_removal(102)
 
-
-run_similarity('test_data_3_1')

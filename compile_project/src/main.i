@@ -19,73 +19,12 @@ typedef unsigned long long uint64_t;
 # 3 "compile_project\\src\\microcontroller_hal.h" 2
 # 1 "compile_project\\src\\variables.h" 1
 # 4 "compile_project\\src\\microcontroller_hal.h" 2
-
-
-
-
-
-
-void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) {
-
-    uint8_t pin_position = 0;
-    while ((pin_mask >> pin_position) != 1) {
-        pin_position++;
-    }
-
-    volatile uint32_t *GPIO_MODER = (uint32_t *)(gpio_base + 0);
-
-    *GPIO_MODER &= ~(3 << (pin_position * 2));
-
-    if (mode == 1) {
-
-        *GPIO_MODER |= (1 << (pin_position * 2));
-    } else {
-
-    }
-}
-# 38 "compile_project\\src\\microcontroller_hal.h"
-void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base, uint32_t pin_mask, uint32_t value) {
-
-    volatile uint32_t *ODR = (uint32_t *)(gpio_port_base + 20);
-
-    uint32_t pin_position = 0;
-    while ((pin_mask >> pin_position) != 1) {
-        pin_position++;
-    }
-
-    if (value) {
-
-        *ODR |= (1 << pin_position);
-    } else {
-
-        *ODR &= ~(1 << pin_position);
-    }
-}
-# 66 "compile_project\\src\\microcontroller_hal.h"
-int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
-
-    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 16);
-
-    uint32_t pin_position = 0;
-    while ((pin_mask >> pin_position) != 1) {
-        pin_position++;
-    }
-
-    return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
-}
-# 87 "compile_project\\src\\microcontroller_hal.h"
-void hardware_abstraction_layer_function_gpio_toggle_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
-
-    volatile uint32_t *GPIO_ODR = (uint32_t *)(gpio_port_base + 20);
-
-    *GPIO_ODR ^= pin_mask;
-}
 # 2 "compile_project\\src\\main.c" 2
 
 
 void usart2_init() {
-    volatile uint32_t *USART2_CR1 = (uint32_t *)(((uint32_t)1073759232) + ((uint32_t)12));
-    volatile uint32_t *USART2_BRR = (uint32_t *)(((uint32_t)1073759232) + ((uint32_t)8));
+    volatile uint32_t *USART2_CR1 = (uint32_t *)(USART2_BASE + USART_CR1_OFFSET);
+    volatile uint32_t *USART2_BRR = (uint32_t *)(USART2_BASE + USART_BRR_OFFSET);
 
 
     *USART2_BRR = 1667;
@@ -98,14 +37,14 @@ void usart2_init() {
 
 
 void print(char *data) {
-    volatile uint32_t *USART2_SR = (uint32_t *)(((uint32_t)1073759232) + ((uint32_t)0));
-    volatile uint32_t *USART2_DR = (uint32_t *)(((uint32_t)1073759232) + ((uint32_t)4));
+    volatile uint32_t *USART2_SR = (uint32_t *)(USART2_BASE + USART_SR_OFFSET);
+    volatile uint32_t *USART2_DR = (uint32_t *)(USART2_BASE + USART_DR_OFFSET);
 
     while (*data) {
-        while (!(*USART2_SR & ((uint16_t)128)));
+        while (!(*USART2_SR & USART_FLAG_TXE));
         *USART2_DR = (uint8_t)(*data++);
     }
-    while (!(*USART2_SR & ((uint16_t)128)));
+    while (!(*USART2_SR & USART_FLAG_TXE));
     *USART2_DR = '\n';
 }
 
@@ -152,7 +91,7 @@ void int_to_string(int num, char *str) {
 
 
 int is_gpioa_clock_enabled(void) {
-    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(((uint32_t)1073887232) + ((uint32_t)48));
+    volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(RCC_BASE + RCC_AHB1ENR_OFFSET);
     return ((*RCC_AHB1ENR & (1 << 0)) != 0) ? 1 : 0;
 }
 
