@@ -40,7 +40,9 @@ OPENAI_API_KEY=your_openai_key
 
 ### Step 6: Run new Test Iterations
 
+```bash
 python test_3_1.py
+```
 
 ### Step 7: Look at Similarity Results
 
