@@ -30,10 +30,7 @@ pip install -r requirements.txt
 ### Step 4: Install Renode
 1. Download the [Renode .MSI installer](https://renode.io/download) and install Renode on your system.
 2. Add the Renode installation directory to your system PATH.
-
-### Step 5: Configure OpenAI Key
-Add your OpenAI API key to a `.env` file in the project root directory:
-
+   
 ### Step 5: Configure OpenAI Key
 Add your OpenAI API key to a `.env` file in the project root directory:
 
