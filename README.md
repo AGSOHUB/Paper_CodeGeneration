@@ -37,3 +37,11 @@ Add your OpenAI API key to a `.env` file in the project root directory:
 ```bash
 OPENAI_API_KEY=your_openai_key
 ```
+
+### Step 6: Run new Test Iterations
+
+python test_3_1.py
+
+### Step 7: Look at Similarity Results
+
+(open up code_similarity_variance_test_data_3_2.svg)
