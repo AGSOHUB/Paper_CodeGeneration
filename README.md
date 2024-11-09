@@ -32,7 +32,7 @@ pip install -r requirements.txt
 2. Add the Renode installation directory to your system PATH.
    
 ### Step 5: Configure OpenAI Key
-Add your OpenAI API key to a `.env` file in the project root directory:
+Create a `.env` file in the project root directory and insert your OpenAI API key:
 
 ```bash
 OPENAI_API_KEY=your_openai_key
