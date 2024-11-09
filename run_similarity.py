@@ -7,6 +7,15 @@ from dotenv import load_dotenv
 import os
 import subprocess
 import csv
+import openai
+from sklearn.metrics.pairwise import cosine_similarity
+from openai import OpenAI
+
+load_dotenv()  # Load environment variables from .env file
+
+api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=api_key)  # Replace with your actual API key
 
 def run_build_bat():
     """
@@ -105,198 +114,83 @@ load_dotenv()  # Load environment variables from .env file
 
 api_key = os.getenv("OPENAI_API_KEY")
 
-# Tokenization function to split code into tokens for similarity calculation
-def tokenize(line):
-    # Tokenize based on word boundaries and sequences of characters
-    return re.findall(r'\b\w+\b', line)
 
-# Similarity calculation between two pieces of code
-def calculate_code_similarity(code1, code2):
-    # Split the code into lines
-    code1_lines = code1.splitlines()
-    code2_lines = code2.splitlines()
-
-    print(f"Comparing Code 1 with {len(code1_lines)} lines and Code 2 with {len(code2_lines)} lines")
-
-    total_tokens = 0
-    matching_tokens = 0
-
-    # Convert lines to sets for exact match comparison
-    code1_lines_set = set(code1_lines)
-    code2_lines_set = set(code2_lines)
+def get_embedding(text, model="text-embedding-3-small"):
+    """
+    Fetches the embedding for a given text using the specified model.
+    Handles both string and dictionary inputs.
+    """
+    # If text is a dictionary, extract the "Code" key (or modify based on your JSON structure)
+    if isinstance(text, dict):
+        text = text.get("Code", "")
     
-    exact_matches = code1_lines_set & code2_lines_set
+    # Ensure text is a string
+    if not isinstance(text, str):
+        raise ValueError(f"Invalid input for embedding. Expected string, got {type(text)}.")
+
+    # Replace newlines to prevent errors
+    text = text.replace("\n", " ")
     
-    print(f"Found {len(exact_matches)} exact matching lines")
+    # Generate the embedding using the OpenAI client
+    response = client.embeddings.create(input=[text], model=model)
+    return response.data[0].embedding
 
-    # Count matching tokens from exact matches
-    for line in exact_matches:
-        tokens = tokenize(line)
-        total_tokens += len(tokens)
-        matching_tokens += len(tokens)
+# Function to calculate cosine similarity between two pieces of text
+def calculate_embedding_similarity(code1, code2, model="text-embedding-3-small", iteration=None):
+    """
+    Calculates cosine similarity between embeddings of two code snippets.
+    """
+    # Get embeddings for the code snippets
+    embedding1 = np.array(get_embedding(code1, model=model))
+    embedding2 = np.array(get_embedding(code2, model=model))
     
-    # Remove exact matches from further comparison
-    code1_lines = [line for line in code1_lines if line not in exact_matches]
-    code2_lines = [line for line in code2_lines if line not in exact_matches]
+    # Compute cosine similarity
+    similarity = cosine_similarity([embedding1], [embedding2])[0][0]
     
-    # Find approximate matches for remaining lines
-    for line in code1_lines:
-        tokens_line1 = tokenize(line)
-        best_match = difflib.get_close_matches(line, code2_lines, n=1, cutoff=0.1)
-        
-        if best_match:
-            tokens_line2 = tokenize(best_match[0])
-            matcher = difflib.SequenceMatcher(None, tokens_line1, tokens_line2)
-            matching_blocks = matcher.get_matching_blocks()
-
-            for match in matching_blocks:
-                matching_tokens += match.size
-
-            total_tokens += max(len(tokens_line1), len(tokens_line2))
-            code2_lines.remove(best_match[0])
-
-    # Add remaining unmatched tokens
-    for line in code1_lines + code2_lines:
-        tokens = tokenize(line)
-        total_tokens += len(tokens)
-
-    similarity_percentage = (matching_tokens / total_tokens) * 100 if total_tokens > 0 else 0
-
-    print(f"Similarity: {similarity_percentage:.2f}%")
+    # Print iteration and similarity in a single line
+    if iteration is not None:
+        print(f"Iteration {iteration}: Similarity = {similarity * 100:.2f}%")
+    else:
+        print(f"Similarity = {similarity * 100:.2f}%")
     
-    return similarity_percentage
+    return similarity * 100  # Convert to percentage
 
-# Function to read JSON file and calculate similarity across iterations
-def calculate_similarity_over_iterations(test_version):
-    file_path = f'results/{test_version}.json'
-    
-    # Check if file exists; if not, create an empty JSON structure
-    if not os.path.exists(file_path):
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w') as f:
-            json.dump({test_version: []}, f)  # Initialize as an empty list or structure as needed
-    
-    # Read the JSON file
-    with open(file_path, 'r') as f:
-        data = json.load(f).get(test_version, [])
-
+def calculate_similarity_over_iterations(data, model="text-embedding-3-small"):
+    """
+    Calculates similarity over multiple iterations from JSON data.
+    """
     similarities = []
-    
+
     for i in range(1, len(data)):
-        code1 = data[1]["Code"]
-        code2 = data[i]["Code"]
-        similarity = calculate_code_similarity(code1, code2)
+        code1 = data[0].get("Code")  # Extract "Code" key from first entry
+        code2 = data[i].get("Code")  # Extract "Code" key from iteration
+        
+        # Ensure both code1 and code2 are valid strings
+        if not isinstance(code1, str) or not isinstance(code2, str):
+            print(f"Skipping iteration {i} due to invalid data format.")
+            continue
+
+        # Calculate similarity
+        similarity = calculate_embedding_similarity(code1, code2, model=model)
         similarities.append(similarity)
 
     return similarities
 
 
-def run_similarity(test_version):
-    # Example usage: Replace 'test_data.json' with your actual JSON file path
-    similarities = calculate_similarity_over_iterations(test_version)
+def run_similarity_1(test_version = "test_data_3_2", iteration_ranges=[10, 30, 100]):
 
-    # Generate plot
-    iterations = list(range(1, len(similarities) + 1))
-    average_similarity = np.mean(similarities)
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(iterations, similarities, marker='o', linestyle='-', color='b', label='Similarity')
-    plt.axhline(y=average_similarity, color='r', linestyle='--', label=f'Average Similarity ({average_similarity:.2f}%)')
-    plt.title('Code Similarity Across Iterations')
-    plt.xlabel('Iteration')
-    plt.ylabel('Similarity Percentage')
-    plt.grid(True)
-    plt.legend()
-
-    # Save the plot to a file
-    plt.savefig(f'code_similarity_plot{test_version}.png')
-
-    # Display the plot
-    plt.show()
-
-
-
-    # Similarity calculation between two pieces of code
-def calculate_code_similarity_1(code1, code2):
-    code1_lines = code1.splitlines()
-    code2_lines = code2.splitlines()
-
-    print(f"Comparing Code 1 with {len(code1_lines)} lines and Code 2 with {len(code2_lines)} lines")
-
-    total_tokens = 0
-    matching_tokens = 0
-
-    # Convert lines to sets for exact match comparison
-    code1_lines_set = set(code1_lines)
-    code2_lines_set = set(code2_lines)
-    
-    exact_matches = code1_lines_set & code2_lines_set
-    print(f"Found {len(exact_matches)} exact matching lines")
-
-    # Count matching tokens from exact matches
-    for line in exact_matches:
-        tokens = tokenize(line)
-        total_tokens += len(tokens)
-        matching_tokens += len(tokens)
-    
-    # Remove exact matches from further comparison
-    code1_lines = [line for line in code1_lines if line not in exact_matches]
-    code2_lines = [line for line in code2_lines if line not in exact_matches]
-    
-    # Find approximate matches for remaining lines
-    for line in code1_lines:
-        tokens_line1 = tokenize(line)
-        best_match = difflib.get_close_matches(line, code2_lines, n=1, cutoff=0.1)
-        
-        if best_match:
-            tokens_line2 = tokenize(best_match[0])
-            matcher = difflib.SequenceMatcher(None, tokens_line1, tokens_line2)
-            matching_blocks = matcher.get_matching_blocks()
-
-            for match in matching_blocks:
-                matching_tokens += match.size
-
-            total_tokens += max(len(tokens_line1), len(tokens_line2))
-            code2_lines.remove(best_match[0])
-
-    # Add remaining unmatched tokens
-    for line in code1_lines + code2_lines:
-        tokens = tokenize(line)
-        total_tokens += len(tokens)
-
-    similarity_percentage = (matching_tokens / total_tokens) * 100 if total_tokens > 0 else 0
-    print(f"Similarity: {similarity_percentage:.2f}%")
-    
-    return similarity_percentage
-
-# Function to read JSON file and calculate similarity across iterations
-def calculate_similarity_over_iterations_1(test_version):
     file_path = f'results/{test_version}.json'
     
-    # Check if file exists; if not, create an empty JSON structure
-    if not os.path.exists(file_path):
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, 'w') as f:
-            json.dump({test_version: []}, f)
-    
-    # Read the JSON file
+    # Read the JSON data
     with open(file_path, 'r') as f:
         data = json.load(f).get(test_version, [])
 
-    similarities = []
-    
-    for i in range(1, len(data)):
-        code1 = data[0]["Code"]  # Assume first code is original
-        code2 = data[i]["Code"]
-        similarity = calculate_code_similarity_1(code1, code2)
-        similarities.append(similarity)
+    if not data:
+        print(f"No data found for test version: {test_version}")
+        return
 
-    return similarities
-
-# Plotting similarity over iterations
-def run_similarity_1(test_version, iteration_ranges=[10, 20, 100]):
-    # Load similarity data
-    similarities = calculate_similarity_over_iterations(test_version)
+    # Calculate similarities
+    similarities = calculate_similarity_over_iterations(data)
 
     # Prepare data for plotting
     means = []
@@ -335,3 +229,5 @@ def run_similarity_1(test_version, iteration_ranges=[10, 20, 100]):
 
     # Display the plot
     plt.show()
+
+run_similarity_1()
