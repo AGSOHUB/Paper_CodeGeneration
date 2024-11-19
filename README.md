@@ -56,9 +56,6 @@ Executes the process of code generation, compilation, and simulation iteratively
 python test_2.py
 ```
 
-
-markdown
-Code kopieren
 ### Step 7: View Generated Results
 
 Generated files can be accessed in the `results` folder:
