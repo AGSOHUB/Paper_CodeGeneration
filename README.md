@@ -38,12 +38,32 @@ Create a `.env` file in the project root directory and insert your OpenAI API ke
 OPENAI_API_KEY=your_openai_key
 ```
 
-### Step 6: Run new Test Iterations
+### Step 6: Run Test Iterations
+
+To execute iterative tests, use the following scripts for the respective tests:
+
+#### Test 1
+Executes an iterative process where random elements are removed from the codebase, followed by regeneration, compilation, and analysis. Results are saved to 'results/test_data_1.json'.
 
 ```bash
-python test_3_1.py
+python test_1.py
 ```
 
-### Step 7: Look at Similarity Results
+#### Test 2
+Executes the process of code generation, compilation, and simulation iteratively without a user interface. Results are saved to 'results/test_data_2.json'.
 
-(open up code_similarity_variance_test_data_3_2.svg)
+```bash
+python test_2.py
+```
+
+
+markdown
+Code kopieren
+### Step 7: View Generated Results
+
+Generated files can be accessed in the `results` folder:
+
+- `results/test_data_1.json`
+- `results/test_data_2.json`
+
+

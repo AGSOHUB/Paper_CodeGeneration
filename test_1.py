@@ -264,7 +264,7 @@ def calculate_code_similarity(code1, code2):
 def run_iterations_with_random_removal(num_iterations):
     """
     Executes an iterative process involving random element removal from the codebase, 
-    followed by fixing, compiling, and analyzing the resulting code. Results are logged 
+    followed by regenerating it, compiling, and analyzing the resulting code. Results are logged 
     into a JSON file for each iteration.
 
     Parameters:

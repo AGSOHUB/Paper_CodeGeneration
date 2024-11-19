@@ -21,7 +21,7 @@ compiling, and simulating C code over multiple iterations. The results are logge
 
 def run_iterations_without_interface(num_iterations):
     """
-    Executes the process of fixing, compiling, and simulating C code iteratively 
+    Executes the process of code generation, compiling, and simulating C code iteratively 
     for a specified number of iterations without a user interface.
 
     Parameters:
