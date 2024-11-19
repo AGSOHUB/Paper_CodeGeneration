@@ -851,11 +851,11 @@ LOAD linker stubs
  .comment       0x00000024       0x13 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
  .comment       0x00000024       0x13 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_info     0x00000000      0xdca
- .debug_info    0x00000000      0x583 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_info    0x00000583      0x70c CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_info    0x00000c8f       0x30 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_info    0x00000cbf      0x10b C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_info     0x00000000      0xde2
+ .debug_info    0x00000000      0x59b CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_info    0x0000059b      0x70c CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_info    0x00000ca7       0x30 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_info    0x00000cd7      0x10b C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
 .debug_abbrev   0x00000000      0x505
  .debug_abbrev  0x00000000      0x281 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
@@ -863,9 +863,9 @@ LOAD linker stubs
  .debug_abbrev  0x00000418       0x24 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
  .debug_abbrev  0x0000043c       0xc9 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_loc      0x00000000      0x637
- .debug_loc     0x00000000      0x4fa CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_loc     0x000004fa      0x13d CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+.debug_loc      0x00000000      0x646
+ .debug_loc     0x00000000      0x509 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_loc     0x00000509      0x13d CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
 
 .debug_aranges  0x00000000       0xd8
  .debug_aranges
@@ -925,18 +925,18 @@ LOAD linker stubs
  .debug_macro   0x0000ee97      0x279 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
  .debug_macro   0x0000f110       0x35 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
 
-.debug_line     0x00000000      0xd60
- .debug_line    0x00000000      0x4ad CMakeFiles/STM32F4Template.elf.dir/main.c.obj
- .debug_line    0x000004ad      0x6f9 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_line    0x00000ba6       0x76 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_line    0x00000c1c      0x144 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_line     0x00000000      0xd5e
+ .debug_line    0x00000000      0x4ab CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+ .debug_line    0x000004ab      0x6f9 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_line    0x00000ba4       0x76 CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_line    0x00000c1a      0x144 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
-.debug_str      0x00000000    0x607e6
- .debug_str     0x00000000    0x607e6 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
-                               0x40dd (size before relaxing)
- .debug_str     0x000607e6    0x604c7 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
- .debug_str     0x000607e6       0xad CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
- .debug_str     0x000607e6      0x1e8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+.debug_str      0x00000000    0x607c6
+ .debug_str     0x00000000    0x607c6 CMakeFiles/STM32F4Template.elf.dir/main.c.obj
+                               0x40f3 (size before relaxing)
+ .debug_str     0x000607c6    0x604c7 CMakeFiles/STM32F4Template.elf.dir/system_stm32f4xx.c.obj
+ .debug_str     0x000607c6       0xad CMakeFiles/STM32F4Template.elf.dir/startup_stm32f40_41xxx.s.obj
+ .debug_str     0x000607c6      0x1e8 C:/msys64/mingw64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
 
 .debug_frame    0x00000000      0x140
  .debug_frame   0x00000000       0xdc CMakeFiles/STM32F4Template.elf.dir/main.c.obj

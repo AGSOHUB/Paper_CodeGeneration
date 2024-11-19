@@ -73,7 +73,7 @@ def compile_code(file_path):
     """
     Compile the code using gcc.
     """
-    compile_command = ['gcc', '-o', 'output/program', file_path]
+    compile_command = ['gcc', '-o', 'program', file_path]
 
     try:
         result = subprocess.run(compile_command, capture_output=True, text=True, check=True)

@@ -61,10 +61,10 @@ Disassembly of section .text:
 
 080001c8 <ENABLE_GPIOA_CLOCK>:
 void ENABLE_GPIOA_CLOCK(void) {
-    // Define the base address for the RCC AHB1 peripheral clock enable register
+    // Define the base address for the RCC and the offset for the AHB1ENR register
     volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(0x40023800 + 0x30);
 
-    // Enable the clock for GPIOA by setting the appropriate bit in the RCC AHB1ENR register
+    // Set the bit 0 of RCC_AHB1ENR to enable the clock for GPIOA
     *RCC_AHB1ENR |= (1 << 0);
  80001c8:	4a03      	ldr	r2, [pc, #12]	@ (80001d8 <ENABLE_GPIOA_CLOCK+0x10>)
  80001ca:	f8d2 3830 	ldr.w	r3, [r2, #2096]	@ 0x830
@@ -159,22 +159,21 @@ void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base,
  8000228:	e7f7      	b.n	800021a <hardware_abstraction_layer_function_gpio_write_pin+0x14>
 
 0800022a <hardware_abstraction_layer_function_gpio_read_pin>:
- * @param pin_mask The mask representing the pin to read (e.g., 1 << 5 for pin 5).
- * @return 1 if the pin is high, 0 if the pin is low.
- */
 int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
-    // Calculate the bit position of the pin
+    // Calculate the address of the input data register (IDR) for the given GPIO port
+    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 0x10);
+
+    // Determine the pin position by finding the first set bit in the pin_mask
     uint32_t pin_position = 0;
  800022a:	2200      	movs	r2, #0
     while ((pin_mask >> pin_position) != 1) {
  800022c:	fa21 f302 	lsr.w	r3, r1, r2
  8000230:	2b01      	cmp	r3, #1
  8000232:	d106      	bne.n	8000242 <hardware_abstraction_layer_function_gpio_read_pin+0x18>
+        pin_position++;
+    }
 
-    // Access the input data register (IDR) of the GPIO port
-    volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 0x10);
-
-    // Read the pin state and return it
+    // Read the state of the pin from the IDR and return it
     return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
  8000234:	6901      	ldr	r1, [r0, #16]
  8000236:	4093      	lsls	r3, r2
@@ -378,7 +377,7 @@ void hardware_abstraction_layer_function_gpio_toggle_pin(uint32_t gpio_port_base
     // Calculate the address of the Output Data Register (ODR) for the given GPIO port
     volatile uint32_t *ODR = (uint32_t *)(gpio_port_base + 0x14);
 
-    // Toggle the specified pin using XOR operation
+    // Toggle the pin by XORing the ODR with the pin mask
     *ODR ^= pin_mask;
  8000320:	480a      	ldr	r0, [pc, #40]	@ (800034c <main+0x5c>)
  8000322:	6943      	ldr	r3, [r0, #20]
