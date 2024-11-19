@@ -73,6 +73,9 @@ def compile_code(file_path):
     """
     Compile the code using gcc.
     """
+
+    print("\n--- Phase 4: Compilation ---")
+
     compile_command = ['gcc', '-o', 'program', file_path]
 
     try:
@@ -90,6 +93,7 @@ def clear_all_files():
     Clears the content of all specified files and writes initial content to them.
     """
 
+    print("\n--- Phase 1: Setup ---")
     file_paths = [
         "compile_project/src/variables.h",
         "compile_project/src/microcontroller_hal.h",

@@ -41,7 +41,7 @@ def process_c_files(folder_path):
         for filename in files:
             if filename in specific_files:
                 file_path = os.path.join(root, filename)
-                print(f"Processing file: {filename}")
+                # print(f"Processing file: {filename}")
 
                 # Compute hash of the file's content to detect changes
                 with open(file_path, 'r', encoding='utf-8') as f:
@@ -72,7 +72,7 @@ def process_c_files(folder_path):
                 with open(hash_path, 'w') as f:
                     f.write(file_hash)
 
-                print("Vector store for file updated and saved.")
+                # print("Vector store for file updated and saved.")
 
     if vectorstore is not None:
         print("All files processed and vector stores updated.")
@@ -159,11 +159,6 @@ def generate_c_function(function_name, parameters):
     {context}
     """
  
-    
-    
-    print(f"\nLet's create some code\n\nFunction name: {function_name}\nParameters: {parameters}\n")
-
-
     # Perform the similarity search in the vector store
     embeddings = OpenAIEmbeddings()
     vectorstore = FAISS.load_local(vectorstore_path, embeddings, allow_dangerous_deserialization=True)

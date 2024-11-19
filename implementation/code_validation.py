@@ -55,6 +55,8 @@ def run_renode_script():
     Returns:
     - None
     """
+
+    print("\n--- Phase 5: Renode-Validation ---")
     
     # Assuming the current working directory is Paper_Codegeneration
     current_dir = os.getcwd()  # Get the current directory (Paper_CodeGeneration)

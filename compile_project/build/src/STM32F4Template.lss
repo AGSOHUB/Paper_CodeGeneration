@@ -61,10 +61,10 @@ Disassembly of section .text:
 
 080001c8 <ENABLE_GPIOA_CLOCK>:
 void ENABLE_GPIOA_CLOCK(void) {
-    // Define the base address for the RCC and the offset for the AHB1ENR register
+    // Define the base address for the RCC AHB1 peripheral clock enable register
     volatile uint32_t *RCC_AHB1ENR = (uint32_t *)(0x40023800 + 0x30);
 
-    // Set the bit 0 of RCC_AHB1ENR to enable the clock for GPIOA
+    // Enable the clock for GPIOA by setting the 0th bit of the RCC_AHB1ENR register
     *RCC_AHB1ENR |= (1 << 0);
  80001c8:	4a03      	ldr	r2, [pc, #12]	@ (80001d8 <ENABLE_GPIOA_CLOCK+0x10>)
  80001ca:	f8d2 3830 	ldr.w	r3, [r2, #2096]	@ 0x830
@@ -78,11 +78,11 @@ void ENABLE_GPIOA_CLOCK(void) {
 // Function to set the mode of a GPIO pin as input or output
 // Parameters:
 // - gpio_base: Base address of the GPIO port (e.g., 0x40020000 for GPIOA)
-// - pin_mask: Bitmask representing the pin (e.g., 1 << 5 for pin 5)
+// - pin_mask: Bit mask for the pin (e.g., 1 << 5 for pin 5)
 // - mode: 0 for input, 1 for output
 void set_input_output_mode(uint32_t gpio_base, uint32_t pin_mask, uint8_t mode) {
  80001dc:	b530      	push	{r4, r5, lr}
-    // Calculate the pin position by finding the first set bit in pin_mask
+    // Calculate the pin position
     uint8_t pin_position = 0;
     while ((pin_mask >> pin_position) != 1) {
  80001de:	2400      	movs	r4, #0
@@ -160,10 +160,10 @@ void hardware_abstraction_layer_function_gpio_write_pin(uint32_t gpio_port_base,
 
 0800022a <hardware_abstraction_layer_function_gpio_read_pin>:
 int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, uint32_t pin_mask) {
-    // Calculate the address of the input data register (IDR) for the given GPIO port
+    // Pointer to the input data register (IDR) of the specified GPIO port
     volatile uint32_t *GPIO_IDR = (uint32_t *)(gpio_port_base + 0x10);
 
-    // Determine the pin position by finding the first set bit in the pin_mask
+    // Calculate the pin position by finding the first set bit in the pin_mask
     uint32_t pin_position = 0;
  800022a:	2200      	movs	r2, #0
     while ((pin_mask >> pin_position) != 1) {
@@ -173,7 +173,7 @@ int hardware_abstraction_layer_function_gpio_read_pin(uint32_t gpio_port_base, u
         pin_position++;
     }
 
-    // Read the state of the pin from the IDR and return it
+    // Read the pin state from the IDR and return it
     return ((*GPIO_IDR & (1 << pin_position)) != 0) ? 1 : 0;
  8000234:	6901      	ldr	r1, [r0, #16]
  8000236:	4093      	lsls	r3, r2

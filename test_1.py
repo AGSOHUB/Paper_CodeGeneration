@@ -178,7 +178,7 @@ def remove_random_element(elements, input_file_path):
 
     while combined_elements:
         element_type, element_name = random.choice(combined_elements)
-        print(f"Attempting to remove {element_type[:-1]}: {element_name}")
+        #print(f"Attempting to remove {element_type[:-1]}: {element_name}")
         
         # Attempt to remove the element from the file
         removal_successful = remove_element_and_comment(input_file_path, element_name)

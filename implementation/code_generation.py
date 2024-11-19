@@ -36,28 +36,33 @@ def fix_c_code(file_path):
     Detects missing functions, variables, and typedefs in a C source file and uses ChatGPT to generate and integrate them into the source code.
     """
 
+    
+    print("\n--- Phase 2: Code Generation ---")
 
     missing_functions, missing_variables, missing_typedefs = find_missing()
     if not missing_functions and not missing_variables and not missing_typedefs:
         print("nothing missing")
 
+    print("Add missing functions:")
+
     # Generate and insert code for each unique missing function
     processed_functions = set()
     for index, (func_name, params) in enumerate(missing_functions):
         if func_name not in processed_functions:
-            print(f"Generating code for function {index + 1}/{len(missing_functions)}: {func_name}")
-#            st.session_state.api_requests += 1
+            print(f"[{index + 1}/{len(missing_functions)}] {func_name} - Code generated")
             func_code = generate_c_function(func_name, params)
             file_path = r"compile_project\src\microcontroller_hal.h"
             insert_generated_code(func_code, file_path)
             processed_functions.add(func_name)
 
+    print("Add missing variables:")
+
     # Generate and insert code for each unique missing variable
     processed_variables = set()
     for index, var_name in enumerate(missing_variables):
         if var_name not in processed_variables:
-            print(f"Generating code for variable {index + 1}/{len(missing_variables)}: {var_name}")
-#            st.session_state.api_requests += 1
+            print(f"[{index + 1}/{len(missing_variables)}] {var_name} - Code generated")
+
             var_code = generate_c_variable(var_name)
             file_path = r"compile_project\src\variables.h"
             insert_generated_code(var_code, file_path)
@@ -68,7 +73,7 @@ def fix_c_code(file_path):
     for index, typedef_name in enumerate(missing_typedefs):
         if typedef_name not in processed_typedefs:
             print(f"Generating code for typedef {index + 1}/{len(missing_typedefs)}: {typedef_name}")
-#            st.session_state.api_requests += 1
+
             typedef_code = generate_c_typedef(typedef_name)
             file_path = r"compile_project\src\typedefs.h"
             insert_generated_code(typedef_code, file_path)
