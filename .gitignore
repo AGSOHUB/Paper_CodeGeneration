@@ -25,7 +25,6 @@ __pycache__/
 *.png
 
 # Ignore JSON and CSV files
-*.json
 *.csv
 
 # Ignore Env File
