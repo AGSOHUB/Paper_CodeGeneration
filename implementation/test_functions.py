@@ -117,5 +117,3 @@ def clear_all_files():
     if os.path.exists(folder_path):
         shutil.rmtree(folder_path)
         print("All files in the 'vector_stores' folder have been deleted.")
-    else:
-        print(f"The folder '{folder_path}' does not exist.")
