@@ -30,13 +30,20 @@ pip install -r requirements.txt
 ### Step 4: Install Renode
 1. Download the [Renode .MSI installer](https://renode.io/download) and install Renode on your system.
 2. Add the Renode installation directory to your system PATH.
-
+   
 ### Step 5: Configure OpenAI Key
-Add your OpenAI API key to a `.env` file in the project root directory:
-
-### Step 5: Configure OpenAI Key
-Add your OpenAI API key to a `.env` file in the project root directory:
+Create a `.env` file in the project root directory and insert your OpenAI API key:
 
 ```bash
 OPENAI_API_KEY=your_openai_key
 ```
+
+### Step 6: Run new Test Iterations
+
+```bash
+python test_3_1.py
+```
+
+### Step 7: Look at Similarity Results
+
+(open up code_similarity_variance_test_data_3_2.svg)
